@@ -13,7 +13,7 @@
     <header class="header">
       <div>
         <h1>Stundensatz-Rechner (Freelance Curator)</h1>
-        <p class="muted">7 Fragen zur Abschätzung eines tragfähigen Stundenhonorars.</p>
+        <p class="muted">8 Fragen zur Abschätzung eines tragfähigen Stundenhonorars.</p>
       </div>
       <div class="header-actions">
         <a class="btn btn-outline" href="index.php">Startseite</a>
@@ -56,6 +56,10 @@
               <span>7) Wie viele Wochen im Jahr bist du krank?</span>
               <input id="sickWeeks" type="number" min="0" max="52" step="1" value="2" />
             </label>
+            <label class="q">
+              <span>8) Wie viel Prozent deiner Arbeitszeit entfällt auf Akquise &amp; Verwaltung (nicht verrechenbar)?</span>
+              <input id="adminShare" type="number" min="0" max="80" step="5" value="20" />
+            </label>
           </div>
         </div>
       </section>
@@ -66,7 +70,7 @@
         </div>
         <div class="card-body">
           <div class="sheet" id="hourlySheet"></div>
-          <p class="small muted">Hinweis: Monatlicher Bedarf brutto = monatlicher Bedarf privat netto × Multiplikator; Stundenhonorar = (Bedarf brutto + Kosten) ÷ verrechenbare Stunden pro Monat.</p>
+          <p class="small muted">Hinweis: Bedarf brutto = Nettobedarf × Multiplikator; verrechenbare Stunden = (Jahresstunden − Urlaub/Krankheit) × (verrechenb. Quote) × (1 − Akquise/Verwaltungsanteil); Mindestsatz = (Bedarf brutto + Kosten) ÷ verrechenbare Stunden/Monat.</p>
         </div>
       </section>
     </main>
