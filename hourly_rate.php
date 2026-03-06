@@ -45,7 +45,7 @@
               <input id="weeklyHours" type="number" min="1" step="1" value="35" />
             </label>
             <label class="q">
-              <span>5) Wie viele dieser Stunden kannst du im Durchschnitt an jemanden verrechnen?</span>
+              <span>5) Wie viele dieser Stunden kannst du direkt Aufträgen zuordnen?</span>
               <input id="billableWeeklyHours" type="number" min="0" step="1" value="24" />
             </label>
             <label class="q">
