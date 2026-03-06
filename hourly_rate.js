@@ -15,7 +15,6 @@
       workingHours: "Arbeitsstunden nach Urlaub/Krankheit",
       billableHoursYear: "Verrechenbare Stunden/Jahr",
       billableHoursMonth: "Verrechenbare Stunden/Monat",
-      adminShare: "Akquise-/Verwaltungsanteil (nicht verrechenbar)",
       effectiveTaxMultiplier: "Effektiver Steuermultiplikator",
       monthlyNeedNet: "Monatlicher Bedarf privat netto",
       monthlyNeedGross: "Monatlicher Bedarf privat brutto",
@@ -29,7 +28,6 @@
       workingHours: "Working hours after vacation/sickness",
       billableHoursYear: "Billable hours per year",
       billableHoursMonth: "Billable hours per month",
-      adminShare: "Acquisition/admin share (non-billable)",
       effectiveTaxMultiplier: "Effective tax multiplier",
       monthlyNeedNet: "Monthly private net need",
       monthlyNeedGross: "Monthly private gross need",
@@ -83,7 +81,6 @@
     sheet.innerHTML = `
       <div class="row"><span>${labels[lang].yearlyHours}</span><strong>${yearlyHours.toFixed(0)} h</strong></div>
       <div class="row"><span>${labels[lang].workingHours}</span><strong>${workingHours.toFixed(0)} h</strong></div>
-      <div class="row"><span>${labels[lang].adminShare}</span><strong>${(adminShare * 100).toFixed(0)}%</strong></div>
       <div class="row"><span>${labels[lang].billableHoursYear}</span><strong>${billableHoursYear.toFixed(0)} h</strong></div>
       <div class="row"><span>${labels[lang].billableHoursMonth}</span><strong>${billableHoursMonth.toFixed(1)} h</strong></div>
       <div class="row"><span>${labels[lang].effectiveTaxMultiplier}</span><strong>${taxMultiplier.toFixed(2)}</strong></div>
