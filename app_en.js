@@ -96,27 +96,6 @@
       ],
     },
     {
-      key: "q8",
-      title: "International projects (incl. travel)?",
-      options: [
-        { k: "A", label: "none" },
-        { k: "B", label: "1/year" },
-        { k: "C", label: "2–3/year" },
-        { k: "D", label: "4+/year" },
-      ],
-      hint: "Driver for variable costs and risk buffer.",
-    },
-    {
-      key: "q9",
-      title: "Who covers travel costs?",
-      options: [
-        { k: "A", label: "mostly me" },
-        { k: "B", label: "shared" },
-        { k: "C", label: "mostly the client" },
-        { k: "D", label: "always the client" },
-      ],
-    },
-    {
       key: "q10",
       title: "Grants/scholarships per year?",
       options: [
@@ -124,48 +103,6 @@
         { k: "B", label: "up to €5,000" },
         { k: "C", label: "€5,000–€15,000" },
         { k: "D", label: "over €15,000" },
-      ],
-    },
-    {
-      key: "q11",
-      title: "How stable is your pipeline?",
-      options: [
-        { k: "A", label: "highly volatile" },
-        { k: "B", label: "rather uncertain" },
-        { k: "C", label: "relatively stable" },
-        { k: "D", label: "very stable" },
-      ],
-      hint: "Affects the safety discount (conservatism factor).",
-    },
-    {
-      key: "q12",
-      title: "How many unpaid projects per year?",
-      options: [
-        { k: "A", label: "0" },
-        { k: "B", label: "1–2" },
-        { k: "C", label: "3–4" },
-        { k: "D", label: "5+" },
-      ],
-      hint: "Reduces paid project volume.",
-    },
-    {
-      key: "q13",
-      title: "Working hours per week (avg)?",
-      options: [
-        { k: "A", label: "under 25 h" },
-        { k: "B", label: "25–35 h" },
-        { k: "C", label: "35–45 h" },
-        { k: "D", label: "over 45 h" },
-      ],
-    },
-    {
-      key: "q14",
-      title: "Share of admin/accounting?",
-      options: [
-        { k: "A", label: "<10 %" },
-        { k: "B", label: "10–20 %" },
-        { k: "C", label: "20–30 %" },
-        { k: "D", label: ">30 %" },
       ],
     },
     {
@@ -264,11 +201,6 @@
       title: "Income streams",
       description: "Additional revenue sources besides project fees.",
       keys: ["q5", "q6", "q7", "q10", "q17", "q18", "q21", "q22"],
-    },
-    {
-      title: "Workload & predictability",
-      description: "How stable and plannable your year is.",
-      keys: ["q8", "q9", "q11", "q12", "q13", "q14"],
     },
     {
       title: "Costs, risk & target",

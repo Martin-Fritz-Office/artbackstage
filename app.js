@@ -96,27 +96,6 @@
       ],
     },
     {
-      key: "q8",
-      title: "Internationale Projekte (inkl. Reisen)?",
-      options: [
-        { k: "A", label: "keine" },
-        { k: "B", label: "1/Jahr" },
-        { k: "C", label: "2–3/Jahr" },
-        { k: "D", label: "4+/Jahr" },
-      ],
-      hint: "Treiber für variable Kosten und Risikopuffer.",
-    },
-    {
-      key: "q9",
-      title: "Wer trägt Reisekosten?",
-      options: [
-        { k: "A", label: "meist ich selbst" },
-        { k: "B", label: "geteilt" },
-        { k: "C", label: "meist Auftraggeber*in" },
-        { k: "D", label: "immer Auftraggeber*in" },
-      ],
-    },
-    {
       key: "q10",
       title: "Förderungen/Stipendien pro Jahr?",
       options: [
@@ -124,48 +103,6 @@
         { k: "B", label: "bis 5.000 €" },
         { k: "C", label: "5.000–15.000 €" },
         { k: "D", label: "über 15.000 €" },
-      ],
-    },
-    {
-      key: "q11",
-      title: "Wie stabil ist deine Auftragslage?",
-      options: [
-        { k: "A", label: "stark schwankend" },
-        { k: "B", label: "eher unsicher" },
-        { k: "C", label: "relativ stabil" },
-        { k: "D", label: "sehr stabil" },
-      ],
-      hint: "Beeinflusst den Sicherheitsabschlag (Konservativitätsfaktor).",
-    },
-    {
-      key: "q12",
-      title: "Wie viele unbezahlte Projekte pro Jahr?",
-      options: [
-        { k: "A", label: "0" },
-        { k: "B", label: "1–2" },
-        { k: "C", label: "3–4" },
-        { k: "D", label: "5+" },
-      ],
-      hint: "Reduziert bezahlten Projektumfang.",
-    },
-    {
-      key: "q13",
-      title: "Arbeitszeit pro Woche (Ø)?",
-      options: [
-        { k: "A", label: "unter 25 h" },
-        { k: "B", label: "25–35 h" },
-        { k: "C", label: "35–45 h" },
-        { k: "D", label: "über 45 h" },
-      ],
-    },
-    {
-      key: "q14",
-      title: "Anteil Administratives/Buchhaltung?",
-      options: [
-        { k: "A", label: "<10 %" },
-        { k: "B", label: "10–20 %" },
-        { k: "C", label: "20–30 %" },
-        { k: "D", label: ">30 %" },
       ],
     },
     {
@@ -264,11 +201,6 @@
       title: "Einnahmenquellen",
       description: "Zusätzliche Erlösströme neben der klassischen Projektarbeit.",
       keys: ["q5", "q6", "q7", "q10", "q17", "q18", "q21", "q22"],
-    },
-    {
-      title: "Auslastung & Planbarkeit",
-      description: "Wie stabil und planbar dein Jahr ist.",
-      keys: ["q8", "q9", "q11", "q12", "q13", "q14"],
     },
     {
       title: "Kosten, Risiko & Ziel",
