@@ -4,17 +4,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Prognose (Didaktisches Layout) | Curator</title>
+  <title>Jahresprognose | Curator</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src="chart.umd.min.js"></script>
   <script defer src="calc_core.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
   <div class="page didactic-page">
     <header class="header didactic-header">
       <div>
-        <h1>Jahresumsatz- & Gewinnprognose (Didaktisches Layout)</h1>
+        <h1>Jahresumsatz- & Gewinnprognose</h1>
         <p class="muted">Gleiche Berechnungslogik wie im Standard-Tool, aber mit geführter Reihenfolge und vereinfachter Oberfläche.</p>
       </div>
       <div class="header-actions">
@@ -23,7 +24,7 @@
       </div>
     </header>
 
-    <main class="didactic-main">
+    <main id="main-content" class="didactic-main">
       <section class="card didactic-intro">
         <div class="card-head"><h2>So nutzt du diese Version</h2></div>
         <div class="card-body didactic-steps">

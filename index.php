@@ -8,19 +8,20 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
   <div class="page landing-page">
     <header class="header landing-header">
       <div>
         <p class="eyebrow brand-mark">artbackstage</p>
         <h1>Wähle deinen Einstieg</h1>
-        <p class="muted">Drei Bereiche, ein Werkzeugkasten: Finanzen, Urheberrecht und Soziales für Kunst- und Kulturpraxis.</p>
+        <p class="muted">Ein Werkzeugkasten: Finanzen, Urheberrecht und Soziales für Kunst- und Kulturpraxis.</p>
       </div>
       <div class="header-actions">
         <a class="btn btn-outline" href="index_en.php" lang="en">English</a>
       </div>
     </header>
 
-    <main class="card landing-card">
+    <main id="main-content" class="card landing-card">
       <section class="story-intro" aria-labelledby="areas-title">
         <h2 id="areas-title">Bereiche</h2>
         <p>Wähle den Bereich, mit dem du starten möchtest.</p>
@@ -34,9 +35,8 @@
             </svg>
           </span>
           <span class="tool-link-content">
-            <h3>artbackstage | Money</h3>
+            <h3>artbackstage | Geld</h3>
             <p>Landingpage mit allen Finanz-, Angebots- und Fair-Pay-Rechnern.</p>
-            <p><a href="yearly_turnover_calculator.php">Neu: Direkt zum Jahresumsatz-Rechner (Zeilenmodell)</a></p>
           </span>
         </a>
 
@@ -47,7 +47,7 @@
             </svg>
           </span>
           <span class="tool-link-content">
-            <h3>artbackstage | Law</h3>
+            <h3>artbackstage | Recht</h3>
             <p>Landingpage mit Einstieg ins UrhG-Quiz und Rechtsgrundlagen.</p>
           </span>
         </a>
