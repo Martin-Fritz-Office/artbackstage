@@ -20,12 +20,13 @@
     </header>
     <main id="main-content" class="grid">
       <section class="card">
-        <h2>Medieninhaber</h2>
+        <h2>Entwicklung und Medieninhaber</h2>
         <address>
           artbackstage<br>
-          Verein zur Förderung aktueller Produktionsformen<br>
+          Verein zur Förderung aktueller kultureller Produktionsformen<br>
           Capistrangasse 3<br>
           1060 Wien<br>
+          ZVR-Zahl: 912669758<br>
           E: <a href="mailto:office@artbackstage.net">office@artbackstage.net</a>
         </address>
       </section>
