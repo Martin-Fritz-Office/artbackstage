@@ -44,8 +44,8 @@
             </svg>
           </span>
           <span class="tool-link-content">
-            <h3>artbackstage | Money</h3>
-            <p>Finanz-, Angebots- und Fair-Pay-Rechner für die freie Kuratorenpraxis.</p>
+            <h3>artbackstage | Geld</h3>
+            <p>Finanz-, Angebots- und Fair-Pay-Rechner für die freie Kulturpraxis.</p>
             <p style="margin-top:6px"><a href="yearly_turnover_calculator.php" style="color:var(--accent-dark);font-weight:600;font-size:13px">Neu: Direkt zum Jahresumsatz-Rechner →</a></p>
           </span>
         </a>
@@ -57,8 +57,8 @@
             </svg>
           </span>
           <span class="tool-link-content">
-            <h3>artbackstage | Law</h3>
-            <p>UrhG-Quiz, Vertrags-Checklisten und Rechtsgrundlagen für Kunstschaffende.</p>
+            <h3>artbackstage | Recht</h3>
+            <p>UrhG-Quiz, Vertrags-Checklisten und Rechtsgrundlagen für in der Kultur Tätige.</p>
           </span>
         </a>
 
@@ -70,7 +70,19 @@
           </span>
           <span class="tool-link-content">
             <h3>artbackstage | Soziales</h3>
-            <p>Soziale Absicherung, Einkommen und Fair-Pay-Planung für Kulturarbeit.</p>
+            <p>Soziale Absicherung, Studien und Inforamtionen für Kulturarbeit.</p>
+          </span>
+        </a>
+
+        <a class="tool-link" href="jitsi_consultation.php">
+          <span class="tool-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M15 10l4.553-2.276A1 1 0 0 1 21 8.723v6.554a1 1 0 0 1-1.447.894L15 14v-4z"></path><rect x="3" y="7" width="12" height="10" rx="2"></rect>
+            </svg>
+          </span>
+          <span class="tool-link-content">
+            <h3>artbackstage | Videoberatung</h3>
+            <p>Live-Beratungsraum für Kunst- und Kulturschaffende direkt im Browser.</p>
           </span>
         </a>
       </div>
