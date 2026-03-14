@@ -30,8 +30,8 @@
           hint: "The percentage of each sale price that the gallery retains.",
           options: [
             { value: "a", label: "30%", desc: "Artist-favorable rate" },
-            { value: "b", label: "40%", desc: "Common standard rate" },
-            { value: "c", label: "50%", desc: "Typical for primary galleries" },
+            { value: "b", label: "40%", desc: "Reduced Common standard rate" },
+            { value: "c", label: "50%", desc: "Common standard rate Typical for primary galleries" },
           ],
           letter: {
             heading: "1. Gallery Commission",
@@ -174,8 +174,8 @@
           hint: "Der Prozentsatz, den die Galerie von jedem Verkaufspreis einbehält.",
           options: [
             { value: "a", label: "30 %", desc: "Künstlerfreundlicher Satz" },
-            { value: "b", label: "40 %", desc: "Branchenüblicher Standardsatz" },
-            { value: "c", label: "50 %", desc: "Üblich bei Primärgalerien" },
+            { value: "b", label: "40 %", desc: "Reduzierter Branchenüblicher Standardsatz" },
+            { value: "c", label: "50 %", desc: "Branchenüblicher Standardsatz bei Primärgalerien" },
           ],
           letter: {
             heading: "1. Galerieprovision",
