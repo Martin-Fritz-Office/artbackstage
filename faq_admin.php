@@ -9,7 +9,7 @@ session_start();
 $configPath = __DIR__ . '/db_config.php';
 $config     = is_file($configPath) ? require $configPath : null;
 
-$passwordHash = is_array($config) ? (string) ($config['admin_password_hash'] ?? '') : '';
+$passwordHash = is_array($config) ? trim((string) ($config['admin_password_hash'] ?? '')) : '';
 $isSetup      = ($passwordHash === '');
 
 // ── CSRF helper ───────────────────────────────────────────────────────────────
