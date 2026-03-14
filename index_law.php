@@ -38,6 +38,14 @@ $landingPage = [
         ['href' => 'bildrecht_checklist.php', 'label' => 'Bild-Urheberrecht: 10-Punkte-Checkliste (AT/DE/CH)'],
       ],
     ],
+    [
+      'title' => 'Ich stelle Werke in einer Galerie aus und brauche eine schriftliche Vereinbarung',
+      'description' => 'Du willst die wichtigsten Konditionen eines Ausstellungsvertrags mit einer Galerie schriftlich festhalten – z. B. Laufzeit, Provision, Transport und Haftung.',
+      'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V6a1.5 1.5 0 0 1 1.5-1.5z"></path><path d="M14 4.5V9h4"></path><path d="M9.2 15 11.3 17.1 15.1 13.1"></path>',
+      'tools' => [
+        ['href' => 'gallery_contract_questionnaire.php', 'label' => 'Galerievertrag-Fragebogen (8 Fragen)'],
+      ],
+    ],
   ],
   'guide_title' => 'Empfohlener Ablauf',
   'guide_intro' => 'Wenn du schnell Sicherheit gewinnen willst: zuerst Quiz, dann Gesetzesquelle im Detail lesen und anschließend auf konkrete Projekte anwenden.',
@@ -77,7 +85,15 @@ $landingPage = [
       ],
     ],
     [
-      'badge' => 'Block 5 · Vertiefen',
+      'badge' => 'Block 5 · Galerievertrag',
+      'title' => 'Ausstellungsvereinbarung erstellen',
+      'description' => 'Beantworte 8 Multiple-Choice-Fragen zu Laufzeit, Provision, Transport und Haftung – und erhalte ein fertiges Bestätigungsschreiben für deinen Galerievertrag.',
+      'tools' => [
+        ['href' => 'gallery_contract_questionnaire.php', 'label' => 'Galerievertrag-Fragebogen (8 Fragen)'],
+      ],
+    ],
+    [
+      'badge' => 'Block 6 · Vertiefen',
       'title' => 'Gesetzestext nachlesen',
       'description' => 'Nutze die RIS-Fassungen, um Details und Ausnahmen nachzuvollziehen.',
       'tools' => [
@@ -93,6 +109,7 @@ $landingPage = [
     ['href' => 'law_quiz.php', 'title' => 'UrhG-Quiz (Deutsch)', 'description' => '20 Fragen zu zentralen Begriffen und Paragraphen des österreichischen Urheberrechtsgesetzes.', 'highlight' => false, 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V6a1.5 1.5 0 0 1 1.5-1.5z"></path><path d="M14 4.5V9h4"></path><path d="M9 13h6"></path><path d="M9 16h4"></path>'],
     ['href' => 'vgg_quiz.php', 'title' => 'Verwertungsgesellschaftengesetz-Quiz', 'description' => 'Lernquiz analog zum UrhG-Format mit Fokus auf kollektive Rechtewahrnehmung und Transparenz.', 'highlight' => false, 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V6a1.5 1.5 0 0 1 1.5-1.5z"></path><path d="M14 4.5V9h4"></path><path d="M9.3 12.2h5.4"></path><path d="M12 9.5v5.4"></path>'],
     ['href' => 'bildrecht_checklist.php', 'title' => 'Bild-Urheberrecht: 10-Punkte-Checkliste', 'description' => 'Schritt-für-Schritt-Prüfung, ob ein Bild frei nutzbar ist: Gemeinfreiheit, Panoramafreiheit, Zitatrecht, Lizenz u. v. m. (AT/DE/CH).', 'highlight' => true, 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V6a1.5 1.5 0 0 1 1.5-1.5z"></path><path d="M14 4.5V9h4"></path><path d="M9.2 15 11.3 17.1 15.1 13.1"></path>'],
+    ['href' => 'gallery_contract_questionnaire.php', 'title' => 'Galerievertrag-Fragebogen', 'description' => '8 Multiple-Choice-Fragen zu den wichtigsten Konditionen eines Ausstellungsvertrags – erstellt ein fertiges Bestätigungsschreiben.', 'highlight' => true, 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V6a1.5 1.5 0 0 1 1.5-1.5z"></path><path d="M14 4.5V9h4"></path><path d="M9.2 15 11.3 17.1 15.1 13.1"></path>'],
   ],
 ];
 
