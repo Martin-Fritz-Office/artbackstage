@@ -1357,3 +1357,18 @@ h3.warn{color:var(--warning)}
   line-height:1.5;
 }
 .tool-preamble p+p{margin-top:6px}
+
+/* ── Letter output ── */
+.letter-output{
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:18px 20px;
+  background:#fff;
+  font-size:14px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--text);
+}
+.letter-output p{margin:0 0 1em}
+.letter-output p:last-child{margin-bottom:0}
