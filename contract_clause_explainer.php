@@ -44,7 +44,7 @@
               <span>Risiko – kritische Klausel</span>
             </div>
           </div>
-          <p class="small muted">Dieser Vertrag ist <strong>fiktiv</strong> und dient ausschließlich Bildungszwecken. Er ersetzt keine Rechtsberatung. Die Formulierungen orientieren sich an typischen – nicht mustergültigen – Verträgen im österreichischen Kulturbetrieb.</p>
+          <p class="small muted">Dieser Vertrag ist <strong>fiktiv</strong> und dient ausschließlich Bildungszwecken. Er ersetzt keine Rechtsberatung. Die Formulierungen orientieren sich an typischen – nicht mustergültigen – Verträgen im Kulturbetrieb.</p>
         </div>
       </section>
 
