@@ -30,6 +30,7 @@ $$;
 """
 
 import os
+import traceback
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -140,6 +141,7 @@ Antworte NUR basierend auf den oben genannten Empfehlungen. Wenn keine der Empfe
     except ValueError as e:
         return jsonify({"error": f"Invalid request: {str(e)}"}), 400
     except Exception as e:
+        traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
