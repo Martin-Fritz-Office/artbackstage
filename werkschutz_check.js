@@ -8,7 +8,6 @@
       explanation: "Rein maschinell oder zufällig entstandene Erzeugnisse ohne menschlichen Gestaltungswillen sind nicht schutzfähig. KI-generierte Inhalte ohne menschliche kreative Steuerung fallen grundsätzlich nicht unter den Werkbegriff.",
       legal: "§ 1 UrhG AT / § 2 UrhG DE",
       tip: "Auch bei KI-Unterstützung kann Schutz bestehen, wenn ein Mensch die maßgeblichen kreativen Entscheidungen trifft (z. B. Auswahl, Anordnung, Nachbearbeitung).",
-      judikatur: "EuGH C‑5/08 <em>Infopaq</em> (2009): Nur Werke, die Ausdruck der geistigen Schöpfung des Urhebers sind, genießen Schutz.",
       requiredAnswer: "yes",
     },
     {
@@ -17,7 +16,6 @@
       explanation: "Bloße Routine, Handwerk oder rein technische Leistung ohne gestalterischen Spielraum genügen nicht. Es muss ein individueller, von persönlichen Fähigkeiten und der Persönlichkeit des Urhebers geprägter Gestaltungsspielraum genutzt worden sein.",
       legal: "§ 1 UrhG AT / § 2 Abs. 2 UrhG DE",
       tip: "AT: Die Rechtsprechung stellt auf die 'Eigentümlichkeit' des Werks ab. DE: Die 'kleine Münze' senkt die Schutzuntergrenze, gilt aber nicht für alle Werkarten gleich.",
-      judikatur: "EuGH C‑145/10 <em>Painer</em> (2011): Auch Fotografien genießen Schutz, wenn gestalterische Freiheiten ausgeübt wurden. – OGH 4 Ob 191/01: Schöpfungshöhe erfordert eine über das Durchschnittliche hinausgehende gestalterische Eigenart.",
       requiredAnswer: "yes",
     },
     {
@@ -26,7 +24,6 @@
       explanation: "Das Gesetz nennt beispielhaft Sprachwerke, Bühnenwerke, Musikwerke, Filmwerke, Werke der bildenden Kunst (einschließlich Lichtbildwerke), Datenbankwerke u. a. Die Aufzählung ist nicht abschließend.",
       legal: "§ 1 Abs. 1 UrhG AT / § 2 UrhG DE",
       tip: "Software ist als Sprachwerk (Computerprogramm) geschützt. Auch Werke der angewandten Kunst (Design, Mode) können schutzfähig sein, wenn die Schöpfungshöhe erreicht wird.",
-      judikatur: "BGH I ZR 143/12 <em>Geburtstagszug</em> (2014): Angewandte Kunst genießt im DE-Recht denselben Schutz wie zweckfreie Kunst, sofern die Gestaltungshöhe erreicht wird.",
       requiredAnswer: "yes",
     },
     {
@@ -35,7 +32,6 @@
       explanation: "Die Grundregel lautet 70 Jahre post mortem auctoris (pma) – gerechnet ab dem 1. Januar des dem Todesjahr folgenden Jahres. Bei anonymen/pseudonymen Werken beginnt die Frist mit der Veröffentlichung.",
       legal: "§§ 60 ff. UrhG AT / §§ 64 ff. UrhG DE",
       tip: "Nach Ablauf der Schutzfrist werden Werke gemeinfrei. Sonderregeln gelten für Filmwerke (70 Jahre ab letztem Mitwirkenden), nachgelassene Werke (§ 76c UrhG AT) und Leistungsschutzrechte.",
-      judikatur: "EuGH C‑277/10 <em>Luksan</em> (2012): Schutzfristen für Filmwerke sind unionsrechtlich harmonisiert (Richtlinie 2006/116/EG).",
       requiredAnswer: "yes",
     },
     {
@@ -44,7 +40,6 @@
       explanation: "Gesetze, Verordnungen, amtliche Erlässe, Gerichtsentscheidungen und andere amtliche Werke sind vom Urheberrechtsschutz ausgenommen und gemeinfrei. Damit soll der ungehinderte Zugang zu staatlichem Recht sichergestellt werden.",
       legal: "§ 7 UrhG AT / § 5 UrhG DE",
       tip: "Kommentare, Erläuterungen und redaktionelle Bearbeitungen amtlicher Texte können dagegen eigenständig schutzfähig sein.",
-      judikatur: "OGH 4 Ob 18/86: Die amtliche Natur eines Werks richtet sich nach dem Inhalt und Zweck, nicht nach der Behördeneigenschaft des Verfassers.",
       requiredAnswer: "no",
     },
     {
@@ -53,7 +48,6 @@
       explanation: "Ideen, Konzepte, Methoden, Prinzipien und Entdeckungen sind als solche nicht schutzfähig (Idee-Ausdruck-Dichotomie). Nur die konkrete individuelle Formgebung – der 'Ausdruck' – genießt Schutz.",
       legal: "Allgemeines Urheberrechtsprinzip; Art. 9 Abs. 2 TRIPS / Art. 2 WCT",
       tip: "Ein Romanplot ist nicht schutzfähig, die ausgeformte Erzählung schon. Eine Kompositionsmethode ist frei, die nach ihr geschaffene Komposition nicht.",
-      judikatur: "BGH I ZR 168/06 <em>TV Total</em> (2008): Schutz besteht nur für die konkrete Formgestaltung, nicht für die dahinterliegende Idee oder Methode.",
       requiredAnswer: "no",
     },
     {
@@ -62,7 +56,6 @@
       explanation: "Reine Faktensammlungen ohne individuelle Auswahl oder Anordnung sind nicht schutzfähig. Datenbanken können eigenständigen Datenbankschutz (§ 76d UrhG AT / § 87a UrhG DE) oder Urheberrechtsschutz genießen, wenn Auswahl oder Anordnung eine individuelle Schöpfung darstellt.",
       legal: "§ 6 UrhG AT / § 4 UrhG DE (Sammelwerke); §§ 76c, 76d UrhG AT / §§ 87a ff. UrhG DE (Datenbankschutz)",
       tip: "Telefonbücher, Fahrpläne oder Preislisten ohne individuelle Gestaltung sind nicht urheberrechtlich geschützt. Der sui-generis-Datenbankschutz kann aber greifen, wenn eine wesentliche Investition in die Erstellung nachweisbar ist.",
-      judikatur: "EuGH C‑46/02 <em>Fixtures Marketing</em> (2004): Der Datenbankschutz sui generis erfordert eine wesentliche Investition, schützt aber nicht die Daten selbst.",
       requiredAnswer: "no",
     },
   ];
@@ -81,17 +74,16 @@
         <li><strong>Schutzdauer-RL:</strong> Richtlinie 2006/116/EG über die Schutzdauer des Urheberrechts</li>
         <li><strong>Datenbank-RL:</strong> Richtlinie 96/9/EG über den rechtlichen Schutz von Datenbanken</li>
       </ul>
-      <h4>Zentrale Judikatur</h4>
+      <h4>Einige Judikaturbeispiele</h4>
       <ul class="sources-list">
         <li>EuGH C‑5/08 <em>Infopaq International</em> (2009): Werkbegriff und Mindestanforderungen an die individuelle geistige Schöpfung</li>
         <li>EuGH C‑145/10 <em>Eva-Maria Painer</em> (2011): Schutzfähigkeit von Lichtbildwerken bei gestalterischen Entscheidungen</li>
-        <li>EuGH C‑403/08 &amp; C‑429/08 <em>Football Association Premier League</em> (2011): Werkbegriff und Schutzuntergrenze</li>
+        <li>EuGH C‑403/08 &amp; C‑429/08 <em>Football Association Premier League</em> (2011): Werkbegriff Sportereignisse keine Werke</li>
         <li>EuGH C‑46/02 <em>Fixtures Marketing</em> (2004): Sui-generis-Datenbankschutz, Investitionsbegriff</li>
         <li>EuGH C‑277/10 <em>Luksan</em> (2012): Urheberrecht am Filmwerk, unionsrechtliche Harmonisierung</li>
         <li>BGH I ZR 143/12 <em>Geburtstagszug</em> (2014): Schöpfungshöhe angewandte Kunst im DE-Recht</li>
-        <li>BGH I ZR 168/06 <em>TV Total</em> (2008): Idee-Ausdruck-Dichotomie, Schutz nur für Formgestaltung</li>
-        <li>OGH 4 Ob 191/01: Eigentümlichkeit und Schöpfungshöhe im österreichischen Urheberrecht</li>
-        <li>OGH 4 Ob 18/86: Abgrenzung amtlicher Werke nach § 7 UrhG AT</li>
+        <li>BGH I ZR 42/05 <em>TV Total</em> (2008): Zur urheberrechtlichen Zulässigkeit der Aufzeichnung und Wiedergabe von fremden Laufbild-Sequenzen im Rahmen einer Fernsehshow - TV-Total.</li>
+        <li>OGH 4 Ob 17/02g: Amtliche Werke nach § 7 UrhG AT</li>
       </ul>
     </div>`;
 
