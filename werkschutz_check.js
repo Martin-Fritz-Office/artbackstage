@@ -133,8 +133,7 @@
           </label>
         </fieldset>
         <p class="small muted tip-text">💡 ${q.tip}</p>
-        <p class="small muted" style="margin-top:0.5rem;"><em>⚖️ ${q.judikatur}</em></p>
-      </article>`;
+          </article>`;
 
     stage.querySelectorAll('input[name="answer"]').forEach((input) => {
       input.addEventListener("change", (e) => {
