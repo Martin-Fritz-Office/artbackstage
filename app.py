@@ -143,15 +143,16 @@ def ask():
         # Step 7: Format sources
         sources = []
         for rec in recommendations:
+            quelldatei = rec.get("Quelldatei") or rec.get("quelldatei", "")
             source_item = {
                 "empfehlung": rec["Empfehlung"],
-                "quelldatei": rec.get("quelldatei", ""),
+                "quelldatei": quelldatei,
                 "adressiert_an": rec["Adressiert an"],
                 "similarity": round(rec["similarity"], 4)
             }
             # Add search link if quelldatei is available
-            if rec.get("quelldatei"):
-                source_item["search_link"] = f"https://www.google.com/search?q={quote(rec['quelldatei'])}"
+            if quelldatei:
+                source_item["search_link"] = f"https://www.google.com/search?q={quote(quelldatei)}"
             sources.append(source_item)
 
         return jsonify({
