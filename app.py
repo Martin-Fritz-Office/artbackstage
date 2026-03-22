@@ -145,7 +145,7 @@ def ask():
         for rec in recommendations:
             source_item = {
                 "empfehlung": rec["Empfehlung"],
-                "unterordner": rec["Unterordner"],
+                "quelldatei": rec.get("quelldatei", ""),
                 "adressiert_an": rec["Adressiert an"],
                 "similarity": round(rec["similarity"], 4)
             }
