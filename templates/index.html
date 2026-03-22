@@ -58,6 +58,45 @@
             margin-bottom: 40px;
         }
 
+        .expertise-selector {
+            margin-bottom: 25px;
+            padding: 16px;
+            background: #f5f7fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .expertise-selector label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .expertise-options {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 400;
+            color: #555;
+        }
+
+        .radio-label input[type="radio"] {
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .radio-label span {
+            font-size: 14px;
+        }
+
         .search-box {
             display: flex;
             gap: 10px;
@@ -150,6 +189,31 @@
 
         .result-section.show {
             display: block;
+        }
+
+        .summary-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .summary-box h3 {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-box p {
+            margin: 0;
+            font-size: 15px;
+            color: #444;
         }
 
         .answer-box {
@@ -299,6 +363,20 @@
 
         <div class="content">
             <div class="search-section">
+                <div class="expertise-selector">
+                    <label for="expertise">Dein Wissenslevel:</label>
+                    <div class="expertise-options">
+                        <label class="radio-label">
+                            <input type="radio" name="expertise" value="beginner" checked>
+                            <span>Ich weiß nicht viel über dieses Thema</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="expertise" value="expert">
+                            <span>Ich bin ein Experte</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="search-box">
                     <input
                         type="text"
@@ -317,8 +395,13 @@
             </div>
 
             <div class="result-section" id="result">
+                <div class="summary-box" id="summaryBox">
+                    <h3>📝 Kurzübersicht</h3>
+                    <p id="summary"></p>
+                </div>
+
                 <div class="answer-box">
-                    <h2>Antwort</h2>
+                    <h2>Detaillierte Antwort</h2>
                     <p id="answer"></p>
                 </div>
 
@@ -336,8 +419,14 @@
         const loading = document.getElementById('loading');
         const error = document.getElementById('error');
         const result = document.getElementById('result');
+        const summaryEl = document.getElementById('summary');
         const answerEl = document.getElementById('answer');
         const sourcesEl = document.getElementById('sources');
+
+        function getExpertiseLevel() {
+            const selected = document.querySelector('input[name="expertise"]:checked');
+            return selected ? selected.value : 'beginner';
+        }
 
         function showError(msg) {
             error.textContent = msg;
@@ -368,7 +457,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ question: q })
+                    body: JSON.stringify({
+                        question: q,
+                        expertise_level: getExpertiseLevel()
+                    })
                 });
 
                 if (!response.ok) {
@@ -387,6 +479,7 @@
         }
 
         function displayResults(data) {
+            summaryEl.textContent = data.summary || data.answer;
             answerEl.textContent = data.answer;
 
             sourcesEl.innerHTML = '';

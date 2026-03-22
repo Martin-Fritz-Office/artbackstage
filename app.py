@@ -60,8 +60,8 @@ supabase: Client = create_client(
 def ask():
     """
     POST /ask endpoint
-    Request body: {"question": "user question in German"}
-    Response: {"answer": "Claude's response", "sources": [...]}
+    Request body: {"question": "user question in German", "expertise_level": "beginner" or "expert"}
+    Response: {"answer": "Claude's response", "summary": "500 char overview", "sources": [...]}
     """
     try:
         data = request.json
@@ -71,6 +71,10 @@ def ask():
         question = data["question"].strip()
         if not question:
             return jsonify({"error": "Question cannot be empty"}), 400
+
+        expertise_level = data.get("expertise_level", "beginner").lower()
+        if expertise_level not in ["beginner", "expert"]:
+            expertise_level = "beginner"
 
         # Step 1: Create embedding from question using OpenAI
         embedding_response = openai_client.embeddings.create(
@@ -98,6 +102,7 @@ def ask():
         if not search_result.data:
             return jsonify({
                 "answer": "Es wurden keine passenden Empfehlungen gefunden.",
+                "summary": "Keine relevanten Empfehlungen gefunden.",
                 "sources": []
             }), 200
 
@@ -110,29 +115,27 @@ def ask():
             context += f"   Adressiert an: {rec['Adressiert an']}\n"
             context += f"   Ähnlichkeit: {rec['similarity']:.2%}\n\n"
 
-        # Step 4: Get Claude's response
+        # Step 4: Build expertise-specific system prompt
+        expertise_prompt = _get_expertise_prompt(expertise_level, question, context)
+
+        # Step 5: Get Claude's response
         message = anthropic_client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=1024,
             messages=[
                 {
                     "role": "user",
-                    "content": f"""Du bist ein hilfreicher Assistent für Prüfungsempfehlungen.
-
-Benutzer-Frage: {question}
-
-Basierend auf den folgenden Empfehlungen aus der Datenbank, bitte antworte klar und prägnant:
-
-{context}
-
-Antworte NUR basierend auf den oben genannten Empfehlungen. Wenn keine der Empfehlungen relevant ist, teile dies mit."""
+                    "content": expertise_prompt
                 }
             ]
         )
 
         answer = message.content[0].text
 
-        # Step 5: Format sources
+        # Step 6: Generate 500-character summary
+        summary = _generate_summary(answer)
+
+        # Step 7: Format sources
         sources = []
         for rec in recommendations:
             sources.append({
@@ -144,6 +147,7 @@ Antworte NUR basierend auf den oben genannten Empfehlungen. Wenn keine der Empfe
 
         return jsonify({
             "answer": answer,
+            "summary": summary,
             "sources": sources
         }), 200
 
@@ -152,6 +156,44 @@ Antworte NUR basierend auf den oben genannten Empfehlungen. Wenn keine der Empfe
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+
+def _get_expertise_prompt(expertise_level, question, context):
+    """Build expertise-specific system prompt"""
+    base_instruction = f"""Du bist ein hilfreicher Assistent für Prüfungsempfehlungen.
+
+Benutzer-Frage: {question}
+
+Basierend auf den folgenden Empfehlungen aus der Datenbank, bitte antworte klar und prägnant:
+
+{context}
+
+Antworte NUR basierend auf den oben genannten Empfehlungen. Wenn keine der Empfehlungen relevant ist, teile dies mit."""
+
+    if expertise_level == "expert":
+        return base_instruction + """\n\nDer Benutzer ist ein Experte. Antworte auf detaillierte, technische Weise. Nutze Fachbegriffe und gehe in die Tiefe. Diskutiere auch mögliche Variationen, Ausnahmen und Best Practices."""
+    else:  # beginner
+        return base_instruction + """\n\nDer Benutzer ist Anfänger und kennt sich mit diesem Thema nicht gut aus. Verwende einfache, verständliche Sprache. Erkläre Fachbegriffe. Konzentriere dich auf die wichtigsten praktischen Punkte."""
+
+
+def _generate_summary(answer):
+    """Generate a 500-character summary of the answer"""
+    # Remove extra whitespace
+    clean_answer = " ".join(answer.split())
+
+    # If answer is already shorter than 500 chars, return it
+    if len(clean_answer) <= 500:
+        return clean_answer
+
+    # Truncate to 500 chars and ensure it ends at a word boundary
+    summary = clean_answer[:500]
+
+    # Find the last space and truncate there
+    last_space = summary.rfind(" ")
+    if last_space > 400:  # Ensure we don't lose too much
+        summary = summary[:last_space]
+
+    return summary.rstrip() + "…"
 
 
 @app.route("/", methods=["GET"])
