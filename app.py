@@ -13,6 +13,7 @@ RETURNS TABLE(
   "Empfehlung" text,
   "Unterordner" text,
   "Adressiert an" text,
+  "quelldatei" text,
   similarity float
 )
 LANGUAGE sql AS $$
@@ -21,6 +22,7 @@ LANGUAGE sql AS $$
     "Empfehlung",
     "Unterordner",
     "Adressiert an",
+    "quelldatei",
     1 - (embedding <=> query_embedding) AS similarity
   FROM "STRH"
   WHERE embedding IS NOT NULL
@@ -33,6 +35,7 @@ import os
 import traceback
 from concurrent.futures import ThreadPoolExecutor
 import concurrent.futures
+from urllib.parse import quote
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -140,12 +143,16 @@ def ask():
         # Step 7: Format sources
         sources = []
         for rec in recommendations:
-            sources.append({
+            source_item = {
                 "empfehlung": rec["Empfehlung"],
                 "unterordner": rec["Unterordner"],
                 "adressiert_an": rec["Adressiert an"],
                 "similarity": round(rec["similarity"], 4)
-            })
+            }
+            # Add search link if quelldatei is available
+            if rec.get("quelldatei"):
+                source_item["search_link"] = f"https://www.google.com/search?q={quote(rec['quelldatei'])}"
+            sources.append(source_item)
 
         return jsonify({
             "answer": answer,
