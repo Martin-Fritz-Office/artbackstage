@@ -34,6 +34,24 @@
                     </div>
                 </div>
 
+                <div class="search-source-selector">
+                    <label for="search-source">Datenquelle:</label>
+                    <div class="search-source-options">
+                        <label class="radio-label">
+                            <input type="radio" name="search-source" value="strh" checked>
+                            <span>Stadtrechnungshof (STRH)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="search-source" value="brh">
+                            <span>Bundesrechnungshof (BRH)</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="search-source" value="all">
+                            <span>Beide Quellen</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="search-box">
                     <input
                         type="text"
@@ -85,6 +103,11 @@
             return selected ? selected.value : 'beginner';
         }
 
+        function getSearchSource() {
+            const selected = document.querySelector('input[name="search-source"]:checked');
+            return selected ? selected.value : 'strh';
+        }
+
         function showError(msg) {
             error.textContent = msg;
             error.classList.add('show');
@@ -116,7 +139,8 @@
                     },
                     body: JSON.stringify({
                         question: q,
-                        expertise_level: getExpertiseLevel()
+                        expertise_level: getExpertiseLevel(),
+                        search_source: getSearchSource()
                     })
                 });
 
