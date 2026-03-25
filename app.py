@@ -410,6 +410,31 @@ def _fetch_all_recommendations(source="strh", limit=500):
         return []
 
 
+def _parse_json_response(response_text):
+    """Parse JSON response with error recovery for malformed JSON"""
+    try:
+        return json.loads(response_text)
+    except json.JSONDecodeError as e:
+        print(f"Initial JSON parse failed: {e}")
+        print(f"Attempting to repair JSON...")
+
+        # Try to fix common JSON issues
+        try:
+            # Remove any trailing comma before closing bracket/brace
+            repaired = response_text.rstrip()
+            if repaired.endswith(',]'):
+                repaired = repaired[:-2] + ']'
+            if repaired.endswith(',}'):
+                repaired = repaired[:-2] + '}'
+
+            # Try parsing the repaired version
+            return json.loads(repaired)
+        except json.JSONDecodeError:
+            # If repair didn't work, return empty list
+            print(f"JSON repair failed. Response text (first 500 chars): {response_text[:500]}")
+            return None
+
+
 def _extract_themes(recommendations):
     """Extract top 100 themes from recommendations using Claude"""
     if not recommendations:
@@ -466,8 +491,11 @@ Antworte NUR mit dem JSON Array, ohne zusätzliche Erklärungen."""
                 response_text = response_text[4:]
             response_text = response_text.strip()
 
-        themes = json.loads(response_text)
-        return themes[:50]  # Limit to top 50
+        themes = _parse_json_response(response_text)
+        if themes is None:
+            return []
+
+        return themes[:50] if isinstance(themes, list) else []
     except Exception as e:
         print(f"Error extracting themes: {e}")
         traceback.print_exc()
@@ -522,7 +550,8 @@ Antworte NUR mit dem JSON Objekt, ohne zusätzliche Erklärungen."""
                 response_text = response_text[4:]
             response_text = response_text.strip()
 
-        return json.loads(response_text)
+        result = _parse_json_response(response_text)
+        return result if isinstance(result, dict) else {"questions": [], "checklist": []}
     except Exception as e:
         print(f"Error generating theme questions: {e}")
         return {"questions": [], "checklist": []}
