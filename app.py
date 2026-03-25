@@ -171,7 +171,10 @@ except Exception as e:
     openai_client = None
 
 try:
-    anthropic_client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+    anthropic_client = Anthropic(
+        api_key=os.getenv("ANTHROPIC_API_KEY"),
+        timeout=90.0  # 90 second timeout for API calls
+    )
 except Exception as e:
     print(f"Warning: Anthropic client initialization failed: {e}")
     anthropic_client = None
@@ -280,7 +283,8 @@ def ask():
                         "role": "user",
                         "content": expertise_prompt
                     }
-                ]
+                ],
+                timeout=90.0
             )
 
             answer = response.content[0].text
@@ -308,6 +312,10 @@ def ask():
 
         except Exception as e:
             traceback.print_exc()
+            # Check for timeout errors
+            error_msg = str(e).lower()
+            if "timeout" in error_msg or "read timed out" in error_msg:
+                return jsonify({"error": "Die KI-Antwort hat zu lange gedauert. Bitte versuchen Sie es später erneut."}), 504
             return jsonify({"error": f"Fehler bei der Antwortgenerierung: {str(e)}"}), 500
 
     except ValueError as e:
@@ -351,11 +359,13 @@ Antwort:
 
 Antworte NUR mit der einen Zentrale Aussage, ohne weitere Erklärungen."""
                 }
-            ]
+            ],
+            timeout=60.0
         )
         return response.content[0].text.strip()
     except Exception as e:
         # Fallback to first sentence if generation fails
+        print(f"Warning: Failed to generate zentrale_aussage: {e}")
         return answer.split('.')[0] + '.' if '.' in answer else answer[:100]
 
 
@@ -439,7 +449,8 @@ Antworte mit einem JSON Array mit max. 50 Objekten im Format:
 
 Antworte NUR mit dem JSON Array, ohne zusätzliche Erklärungen."""
                 }
-            ]
+            ],
+            timeout=90.0
         )
 
         response_text = response.content[0].text.strip()
@@ -497,7 +508,8 @@ Antworte mit einem JSON Objekt im Format:
 
 Antworte NUR mit dem JSON Objekt, ohne zusätzliche Erklärungen."""
                 }
-            ]
+            ],
+            timeout=90.0
         )
 
         response_text = response.content[0].text.strip()
@@ -570,6 +582,9 @@ def themes():
 
     except Exception as e:
         traceback.print_exc()
+        error_msg = str(e).lower()
+        if "timeout" in error_msg or "read timed out" in error_msg:
+            return jsonify({"error": "Die Themenerkennung hat zu lange gedauert. Bitte versuchen Sie es später erneut."}), 504
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
@@ -622,6 +637,9 @@ def theme_questions():
         return jsonify({"error": f"Invalid request: {str(e)}"}), 400
     except Exception as e:
         traceback.print_exc()
+        error_msg = str(e).lower()
+        if "timeout" in error_msg or "read timed out" in error_msg:
+            return jsonify({"error": "Die Generierung hat zu lange gedauert. Bitte versuchen Sie es später erneut."}), 504
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
