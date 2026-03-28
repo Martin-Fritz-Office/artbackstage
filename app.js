@@ -28,15 +28,15 @@
       key: "q1",
       title: "Dein primärer Tätigkeitsfokus?",
       options: [
-        { k: "A", label: "Kuratieren von Ausstellungen (Institutionen)" },
-        { k: "B", label: "Kuratieren + Text/Essay" },
-        { k: "C", label: "Kuratieren + Projektmanagement" },
-        { k: "D", label: "Kuratieren + Beratung/Strategie" },
+        { k: "A", label: "Projektbasierte Arbeit (mit Institutionen)" },
+        { k: "B", label: "Projektarbeit + Text/Essay" },
+        { k: "C", label: "Projektarbeit + Projektmanagement" },
+        { k: "D", label: "Projektarbeit + Beratung/Strategie" },
       ],
     },
     {
       key: "q2",
-      title: "Wie viele kuratorische oder künstlerische Projekte pro Jahr sind realistisch?",
+      title: "Wie viele Projekte pro Jahr sind realistisch?",
       options: [
         { k: "A", label: "1–3" },
         { k: "B", label: "4–6" },
@@ -194,7 +194,7 @@
   const QUESTION_GROUPS = [
     {
       title: "Profil & Ausrichtung",
-      description: "Grundausrichtung deiner kuratorischen Arbeit.",
+      description: "Grundausrichtung deiner kulturellen Arbeit.",
       keys: ["q1", "q2", "q3", "q4"],
     },
     {
@@ -213,7 +213,7 @@
   const calcCore = window.CuratorCalcCore;
   const CALC_LABELS = {
     income: [
-      "Kuratorische Honorare",
+      "Projekthonorar",
       "Texte & Publikationen",
       "Beratung / Jury",
       "andere Aufträge",
@@ -530,7 +530,7 @@
 
   function buildPrognosisLines(c) {
     return [
-      { label: "Kuratorische Honorare", value: c.curatorial, formatted: EUR(c.curatorial) },
+      { label: "Projekthonorar", value: c.curatorial, formatted: EUR(c.curatorial) },
       { label: "Texte & Publikationen", value: c.texts, formatted: EUR(c.texts) },
       { label: "Beratung / Jury", value: c.consulting, formatted: EUR(c.consulting) },
       { label: "andere Aufträge", value: c.teaching, formatted: EUR(c.teaching) },
@@ -802,7 +802,7 @@
   function renderSheet(c) {
     sheetEl.innerHTML = "";
 
-    sheetEl.appendChild(sheetRow("Kuratorische Honorare", EUR(c.curatorial)));
+    sheetEl.appendChild(sheetRow("Projekthonorar", EUR(c.curatorial)));
     sheetEl.appendChild(sheetRow("Texte & Publikationen", EUR(c.texts)));
     sheetEl.appendChild(sheetRow("Beratung / Jury", EUR(c.consulting)));
     sheetEl.appendChild(sheetRow("andere Aufträge", EUR(c.teaching)));

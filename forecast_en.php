@@ -9,12 +9,12 @@ require_once __DIR__ . '/seo_meta.php';
   <?php
     generate_seo_meta([
       'title' => 'Annual Revenue & Profit Forecast – artbackstage',
-      'description' => 'Calculate your annual revenue and profit as a freelance curator. Free, anonymous, and compare scenarios.',
+      'description' => 'Calculate your annual revenue and profit as an independent cultural professional. Free, anonymous, and compare scenarios.',
       'lang' => 'en',
       'og_image' => 'https://artbackstage.at/og-image.png',
       'alternate_lang' => 'de',
       'alternate_url' => 'https://artbackstage.at/forecast.php',
-      'schema' => get_site_schema('Annual Revenue & Profit Forecast', 'Calculate your annual revenue and profit as a freelance curator'),
+      'schema' => get_site_schema('Annual Revenue & Profit Forecast', 'Calculate your annual revenue and profit as an independent cultural professional'),
     ]);
   ?>
   <link rel="stylesheet" href="style.css" />
@@ -27,7 +27,7 @@ require_once __DIR__ . '/seo_meta.php';
   <div class="page">
     <header class="header">
       <div>
-        <h1>Annual Revenue & Profit Forecast (Freelance Curator)</h1>
+        <h1>Annual Revenue & Profit Forecast (Cultural Professional)</h1>
         <p class="muted">Pie charts show percentage shares (tooltip). Values are gross heuristics.</p>
       </div>
       <div class="header-actions">
@@ -69,7 +69,7 @@ require_once __DIR__ . '/seo_meta.php';
           <hr class="sep" />
 
           <p class="small muted">
-            Short logic: Projects×Fee (with stability factor) + Texts + Consulting + Grants = Revenue. Support and net income from employment are added only to the available annual income.
+            Short logic: Project revenue + Fees + Content/texts + Consulting + Grants = Revenue. Support and net income from employment are added only to the available annual income.
             Fixed costs + variable project costs (travel share) + social insurance/provision (26% of pre-tax profit) + Austrian income tax (2025 brackets: 0–13,308 € 0%, 13,309–21,617 € 20%, 21,618–35,836 € 30%, 35,837–69,166 € 40%, 69,167–103,072 € 48%, 103,073–1 million € 50%, above 1 million € 55%) = costs.
             Reserve rate depends on risk profile.
           </p>
