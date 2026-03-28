@@ -1973,6 +1973,18 @@ button:disabled {
     opacity:0.7;
 }
 
+.loading p {
+    margin-top:15px;
+}
+
+.themes-section {
+    display:none;
+}
+
+.themes-section.show {
+    display:block;
+}
+
 @media (max-width:600px) {
     .search-box {
         flex-direction:column;
