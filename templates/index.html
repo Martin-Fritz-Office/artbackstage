@@ -10,7 +10,7 @@
     <div class="page search-page">
         <div class="header">
             <div>
-                <h1>🔍 Lerne aus Empfehlungen des Wiener Stadtrechnungshofs und des Bundesrechnungshofs!</h1>
+                <h1>🔍 Frag den RH! Lerne aus Empfehlungen des Wiener Stadtrechnungshofs und des Bundesrechnungshofs!</h1>
                 <p>Durchsuche und analysiere mehr als 20.000 Empfehlungen seit 2017</p>
             </div>
             <div class="header-actions">
@@ -19,6 +19,17 @@
         </div>
 
         <div class="container">
+
+              <div class="search-box">
+                    <input
+                        type="text"
+                        id="question"
+                        placeholder="Stelle deine Frage ... (z.B. 'Was muss eine Generalversammlung machen?')"
+                        autocomplete="on"
+                    >
+                    <button id="searchBtn">Suchen</button>
+                </div>
+            
             <div class="search-section">
                 <div class="expertise-selector">
                     <label for="expertise">Dein Wissenslevel:</label>
@@ -38,7 +49,7 @@
                     <label for="search-source">Datenquelle:</label>
                     <div class="search-source-options">
                         <label class="radio-label">
-                            <input type="radio" name="search-source" value="strh" checked>
+                            <input type="radio" name="search-source" >
                             <span>Stadtrechnungshof (STRH)</span>
                         </label>
                         <label class="radio-label">
@@ -46,7 +57,7 @@
                             <span>Bundesrechnungshof (BRH)</span>
                         </label>
                         <label class="radio-label">
-                            <input type="radio" name="search-source" value="all">
+                            <input type="radio" name="search-source" value="all" checked>
                             <span>Beide Quellen</span>
                         </label>
                     </div>
@@ -65,16 +76,7 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="search-box">
-                    <input
-                        type="text"
-                        id="question"
-                        placeholder="Stelle deine Frage ein... (z.B. 'Was sollten wir bei der Mitarbeiterverwaltung überprüfen?')"
-                        autocomplete="off"
-                    >
-                    <button id="searchBtn">Suchen</button>
-                </div>
+              
             </div>
 
             <div class="error" id="error"></div>
