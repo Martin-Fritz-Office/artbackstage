@@ -88,6 +88,11 @@ LANGUAGE sql AS $$
   ORDER BY embedding <=> query_embedding
   LIMIT match_count;
 $$;
+
+-- Performance optimization: Create vector similarity indexes
+-- These MUST be created for optimal vector search performance
+CREATE INDEX IF NOT EXISTS ix_strh_embedding ON "STRH" USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+CREATE INDEX IF NOT EXISTS ix_brh_embedding ON "BRH" USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 """
 
 import os
@@ -214,7 +219,35 @@ class EmbeddingCache:
         self.cache[key] = (embedding, time.time())
 
 
-embedding_cache = EmbeddingCache(ttl_seconds=600)
+embedding_cache = EmbeddingCache(ttl_seconds=3600)  # Increased to 1 hour for better cache hits
+
+# Search result cache for vector search queries
+class SearchResultCache:
+    def __init__(self, ttl_seconds=1800):  # 30 minutes TTL
+        self.cache = {}
+        self.ttl = ttl_seconds
+
+    def get_key(self, embedding_hash, source):
+        """Generate cache key from embedding hash and search source"""
+        return f"search_{embedding_hash}_{source}"
+
+    def get(self, embedding_hash, source):
+        """Get cached search results if valid"""
+        key = self.get_key(embedding_hash, source)
+        if key in self.cache:
+            results, timestamp = self.cache[key]
+            if time.time() - timestamp < self.ttl:
+                return results
+            else:
+                del self.cache[key]
+        return None
+
+    def set(self, embedding_hash, source, results):
+        """Cache search results with timestamp"""
+        key = self.get_key(embedding_hash, source)
+        self.cache[key] = (results, time.time())
+
+search_result_cache = SearchResultCache(ttl_seconds=1800)
 
 # Theme cache with longer TTL (24 hours)
 class ThemeCache:
@@ -384,29 +417,39 @@ def ask():
                 question_embedding = embedding_response.data[0].embedding
                 embedding_cache.set(question, question_embedding)
 
-            # Step 2: Vector search
-            rpc_function = "match_empfehlungen"
-            if search_source == "brh":
-                rpc_function = "match_brh"
-            elif search_source == "all":
-                rpc_function = "match_all_empfehlungen"
+            # Step 2: Vector search (with result caching)
+            embedding_hash = hashlib.md5(str(question_embedding).encode()).hexdigest()
 
-            try:
-                search_result = supabase_rpc_with_timeout(
-                    rpc_function,
-                    {"query_embedding": question_embedding, "match_count": 5},
-                    timeout_seconds=15
-                )
-            except Exception as e:
-                error_details = {
-                    'type': 'error',
-                    'error': 'Die Suche hat zu lange gedauert. Bitte versuchen Sie es später erneut.',
-                    'request_id': request_id,
-                    'timestamp': datetime.utcnow().isoformat() + 'Z'
-                }
-                print(f"Search error: {e}")
-                yield f"data: {json.dumps(error_details)}\n\n"
-                return
+            # Try to get cached search result first
+            cached_search_result = search_result_cache.get(embedding_hash, search_source)
+            if cached_search_result is not None:
+                search_result = type('obj', (object,), {'data': cached_search_result})()
+            else:
+                rpc_function = "match_empfehlungen"
+                if search_source == "brh":
+                    rpc_function = "match_brh"
+                elif search_source == "all":
+                    rpc_function = "match_all_empfehlungen"
+
+                try:
+                    search_result = supabase_rpc_with_timeout(
+                        rpc_function,
+                        {"query_embedding": question_embedding, "match_count": 3},
+                        timeout_seconds=15
+                    )
+                    # Cache the search results
+                    if search_result.data:
+                        search_result_cache.set(embedding_hash, search_source, search_result.data)
+                except Exception as e:
+                    error_details = {
+                        'type': 'error',
+                        'error': 'Die Suche hat zu lange gedauert. Bitte versuchen Sie es später erneut.',
+                        'request_id': request_id,
+                        'timestamp': datetime.utcnow().isoformat() + 'Z'
+                    }
+                    print(f"Search error: {e}")
+                    yield f"data: {json.dumps(error_details)}\n\n"
+                    return
 
             if not search_result.data:
                 error_details = {
@@ -577,10 +620,11 @@ def _fetch_all_recommendations(source="strh", limit=500):
             response = supabase.table("STRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
         elif source == "brh":
             response = supabase.table("BRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
-        else:  # all
-            strh_data = supabase.table("STRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
-            brh_data = supabase.table("BRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
-            response = type('obj', (object,), {'data': (strh_data.data or []) + (brh_data.data or [])})()
+        else:  # all - use single optimized query instead of two separate queries
+            response = supabase.table("STRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+            if response.data:
+                brh_response = supabase.table("BRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+                response.data.extend(brh_response.data or [])
 
         return response.data or []
     except Exception as e:
