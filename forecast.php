@@ -9,12 +9,12 @@ require_once __DIR__ . '/seo_meta.php';
   <?php
     generate_seo_meta([
       'title' => 'Jahresumsatz- & Gewinnprognose – artbackstage',
-      'description' => 'Berechne deinen Jahresumsatz und Gewinn als freier Kurator. Kostenlos, anonym und mit Szenario-Vergleich.',
+      'description' => 'Berechne deinen Jahresumsatz und Gewinn als unabhängiger Kulturschaffender. Kostenlos, anonym und mit Szenario-Vergleich.',
       'lang' => 'de',
       'og_image' => 'https://artbackstage.at/og-image.png',
       'alternate_lang' => 'en',
       'alternate_url' => 'https://artbackstage.at/forecast_en.php',
-      'schema' => get_site_schema('Jahresumsatz- & Gewinnprognose', 'Berechne deinen Jahresumsatz als freier Kurator'),
+      'schema' => get_site_schema('Jahresumsatz- & Gewinnprognose', 'Berechne deinen Jahresumsatz als unabhängiger Kulturschaffender'),
     ]);
   ?>
   <link rel="stylesheet" href="style.css" />
@@ -27,7 +27,7 @@ require_once __DIR__ . '/seo_meta.php';
   <div class="page">
     <header class="header">
       <div>
-        <h1>Jahresumsatz- & Gewinnprognose (Freelance Curator)</h1>
+        <h1>Jahresumsatz- & Gewinnprognose (Kulturschaffender)</h1>
         <p class="muted">Wenn Du willst, kannst Du Dein Szenario speichern, um es mit anderen zu vergleichen.</p>
       </div>
       <div class="header-actions">
@@ -69,7 +69,7 @@ require_once __DIR__ . '/seo_meta.php';
           <hr class="sep" />
 
           <p class="small muted">
-            Kurzlogik: Projekte×Honora + Texte + Beratung + Förderungen = Umsatz. Unterstützung und Nettoeinkommen aus der Anstellung werden erst beim verfügbaren Jahreseinkommen addiert.
+            Kurzlogik: Projekteinnahmen + Honorare + Texte/Inhalte + Beratung + Förderungen = Umsatz. Unterstützung und Nettoeinkommen aus der Anstellung werden erst beim verfügbaren Jahreseinkommen addiert.
             Fixkosten + variable Projektkosten (Reiseanteil) + SV/Vorsorge (26% vom Gewinn vor Steuern) + Einkommensteuer Österreich (Tarif 2025: 0–13.308 € 0%, 13.309–21.617 € 20%, 21.618–35.836 € 30%, 35.837–69.166 € 40%, 69.167–103.072 € 48%, 103.073–1 Mio. € 50%, über 1 Mio. € 55%) = Kosten.
             Rücklagenquote hängt am Risikoprofil.
           </p>

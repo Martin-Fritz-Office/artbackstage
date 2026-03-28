@@ -28,18 +28,18 @@
       key: "q1",
       title: "Your primary focus of work?",
       options: [
-        { k: "A", label: "Curating exhibitions (institutions)" },
-        { k: "B", label: "Curating + writing/essay" },
-        { k: "C", label: "Curating + project management" },
-        { k: "D", label: "Curating + consulting/strategy" },
+        { k: "A", label: "Project-based work (with institutions)" },
+        { k: "B", label: "Project work + writing/content" },
+        { k: "C", label: "Project work + project management" },
+        { k: "D", label: "Project work + consulting/strategy" },
       ],
     },
     {
       key: "q2",
-      title: "How many curatorial projects per year are realistic?",
+      title: "How many projects per year are realistic?",
       options: [
-        { k: "A", label: "3–4" },
-        { k: "B", label: "5–6" },
+        { k: "A", label: "1–3" },
+        { k: "B", label: "4–6" },
         { k: "C", label: "7–9" },
         { k: "D", label: "10+" },
       ],
@@ -127,7 +127,7 @@
     },
     {
       key: "q17",
-      title: "How many teaching assignments do you have per year?",
+      title: "How many other assignments do you have per year?",
       options: [
         { k: "A", label: "0" },
         { k: "B", label: "1–2" },
@@ -137,7 +137,7 @@
     },
     {
       key: "q18",
-      title: "Average fee per teaching assignment (gross)?",
+      title: "Average fee per assignment (gross)?",
       options: [
         { k: "A", label: "under €500" },
         { k: "B", label: "€500–€1,000" },
@@ -194,7 +194,7 @@
   const QUESTION_GROUPS = [
     {
       title: "Profile & positioning",
-      description: "Your core setup as an independent curator.",
+      description: "Your core setup as an independent cultural professional.",
       keys: ["q1", "q2", "q3", "q4"],
     },
     {
@@ -213,7 +213,7 @@
   const calcCore = window.CuratorCalcCore;
   const CALC_LABELS = {
     income: [
-      "Curatorial fees",
+      "Project fees",
       "Texts & publications",
       "Consulting / jury",
       "Other assignments",
@@ -530,7 +530,7 @@
 
   function buildPrognosisLines(c) {
     return [
-      { label: "Curatorial fees", value: c.curatorial, formatted: EUR(c.curatorial) },
+      { label: "Project fees", value: c.curatorial, formatted: EUR(c.curatorial) },
       { label: "Texts & publications", value: c.texts, formatted: EUR(c.texts) },
       { label: "Consulting / jury", value: c.consulting, formatted: EUR(c.consulting) },
       { label: "Other assignments", value: c.teaching, formatted: EUR(c.teaching) },
@@ -803,7 +803,7 @@
   function renderSheet(c) {
     sheetEl.innerHTML = "";
 
-    sheetEl.appendChild(sheetRow("Curatorial fees", EUR(c.curatorial)));
+    sheetEl.appendChild(sheetRow("Project fees", EUR(c.curatorial)));
     sheetEl.appendChild(sheetRow("Texts & publications", EUR(c.texts)));
     sheetEl.appendChild(sheetRow("Consulting / jury", EUR(c.consulting)));
     sheetEl.appendChild(sheetRow("Other assignments", EUR(c.teaching)));
