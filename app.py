@@ -12,7 +12,6 @@ CREATE OR REPLACE FUNCTION match_empfehlungen(
 RETURNS TABLE(
   id bigint,
   "Empfehlung" text,
-  "Unterordner" text,
   "Adressiert an" text,
   "quelldatei" text,
   similarity float
@@ -21,7 +20,6 @@ LANGUAGE sql AS $$
   SELECT
     id,
     "Empfehlung",
-    "Unterordner",
     "Adressiert an",
     "quelldatei",
     1 - (embedding <=> query_embedding) AS similarity
@@ -39,7 +37,6 @@ CREATE OR REPLACE FUNCTION match_brh(
 RETURNS TABLE(
   id bigint,
   "Empfehlung" text,
-  "Unterordner" text,
   "Adressiert an" text,
   "quelldatei" text,
   similarity float
@@ -48,7 +45,6 @@ LANGUAGE sql AS $$
   SELECT
     id,
     "Empfehlung",
-    "Unterordner",
     "Adressiert an",
     "quelldatei",
     1 - (embedding <=> query_embedding) AS similarity
@@ -66,7 +62,6 @@ CREATE OR REPLACE FUNCTION match_all_empfehlungen(
 RETURNS TABLE(
   id bigint,
   "Empfehlung" text,
-  "Unterordner" text,
   "Adressiert an" text,
   "quelldatei" text,
   similarity float
@@ -75,14 +70,13 @@ LANGUAGE sql AS $$
   SELECT
     id,
     "Empfehlung",
-    "Unterordner",
     "Adressiert an",
     "quelldatei",
     1 - (embedding <=> query_embedding) AS similarity
   FROM (
-    SELECT id, "Empfehlung", "Unterordner", "Adressiert an", "quelldatei", embedding FROM "STRH"
+    SELECT id, "Empfehlung", "Adressiert an", "quelldatei", embedding FROM "STRH"
     UNION ALL
-    SELECT id, "Empfehlung", "Unterordner", "Adressiert an", "quelldatei", embedding FROM "BRH"
+    SELECT id, "Empfehlung", "Adressiert an", "quelldatei", embedding FROM "BRH"
   ) AS combined
   WHERE embedding IS NOT NULL
   ORDER BY embedding <=> query_embedding
@@ -486,7 +480,6 @@ def ask():
             context = "Folgende Empfehlungen könnten relevant sein:\n\n"
             for i, rec in enumerate(recommendations, 1):
                 context += f"{i}. {rec['Empfehlung']}\n"
-                context += f"   Ordner: {rec['Unterordner']}\n"
                 context += f"   Adressiert an: {rec['Adressiert an']}\n"
                 context += f"   Ähnlichkeit: {rec['similarity']:.2%}\n\n"
 
@@ -620,13 +613,13 @@ def _fetch_all_recommendations(source="strh", limit=500):
     """Fetch all recommendations from Supabase"""
     try:
         if source == "strh":
-            response = supabase.table("STRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+            response = supabase.table("STRH").select('"Empfehlung","Adressiert an","Quelldatei"').limit(limit).execute()
         elif source == "brh":
-            response = supabase.table("BRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+            response = supabase.table("BRH").select('"Empfehlung","Adressiert an","Quelldatei"').limit(limit).execute()
         else:  # all - use single optimized query instead of two separate queries
-            response = supabase.table("STRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+            response = supabase.table("STRH").select('"Empfehlung","Adressiert an","Quelldatei"').limit(limit).execute()
             if response.data:
-                brh_response = supabase.table("BRH").select('"Empfehlung","Unterordner","Adressiert an","Quelldatei"').limit(limit).execute()
+                brh_response = supabase.table("BRH").select('"Empfehlung","Adressiert an","Quelldatei"').limit(limit).execute()
                 response.data.extend(brh_response.data or [])
 
         return response.data or []
@@ -743,37 +736,8 @@ def _extract_themes_fallback(recommendations):
     if not recommendations:
         return []
 
-    # Count themes by "Unterordner" (subfolder/category)
-    theme_counter = Counter()
-    theme_descriptions = {}
-
-    for rec in recommendations:
-        theme = rec.get('Unterordner', 'Sonstiges')
-        if theme:
-            theme_counter[theme] += 1
-            # Store first recommendation as description if not already set
-            if theme not in theme_descriptions:
-                theme_descriptions[theme] = rec.get('Empfehlung', '')[:100]
-
-    # Convert to themes list
-    themes = []
-    for theme_id, (theme_name, count) in enumerate(theme_counter.most_common(50), 1):
-        # Determine frequency label
-        if count > 20:
-            frequency = "sehr häufig"
-        elif count > 10:
-            frequency = "häufig"
-        else:
-            frequency = "regelmäßig"
-
-        themes.append({
-            "id": theme_id,
-            "theme": theme_name,
-            "description": theme_descriptions.get(theme_name, f"{count} Empfehlungen in dieser Kategorie"),
-            "frequency": frequency
-        })
-
-    return themes[:50]
+    # Return empty themes as category data is no longer available
+    return []
 
 
 def _extract_themes(recommendations):
@@ -787,7 +751,7 @@ def _extract_themes(recommendations):
 
     # Prepare context for Claude
     recommendation_text = "\n".join([
-        f"- {rec.get('Empfehlung', '')} (Bereich: {rec.get('Unterordner', '')})"
+        f"- {rec.get('Empfehlung', '')}"
         for rec in sample
     ])
 
