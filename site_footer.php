@@ -34,13 +34,16 @@ if (!function_exists('render_site_footer')) {
         $moneyHref = $isEnglishPage ? 'index_money_en.php' : 'index_money.php';
         $lawHref   = 'index_law.php';
         $socialHref = $isEnglishPage ? 'index_soziales_en.php' : 'index_soziales.php';
+        $organisationHref = $isEnglishPage ? 'index_organisation_en.php' : 'index_organisation.php';
         $isMoneyPage  = str_contains($scriptName, 'money') || str_contains($scriptName, 'forecast') || str_contains($scriptName, 'hourly') || str_contains($scriptName, 'freelance') || str_contains($scriptName, 'turnover') || str_contains($scriptName, 'personalplanung') || str_contains($scriptName, 'gallery_contract') || str_contains($scriptName, 'agreement') || str_contains($scriptName, 'honorarium');
         $isLawPage    = str_contains($scriptName, 'law') || str_contains($scriptName, 'vgg') || str_contains($scriptName, 'bildrecht') || str_contains($scriptName, 'fair_use');
         $isSocialPage = str_contains($scriptName, 'soziales') || str_contains($scriptName, 'onace') || str_contains($scriptName, 'gender') || str_contains($scriptName, 'svs_leistungen');
+        $isOrganisationPage = str_contains($scriptName, 'organisation') || str_contains($scriptName, 'vereinstipps') || str_contains($scriptName, 'werkschutz');
         $hubNavLabel  = $isEnglishPage ? 'artbackstage sections' : 'artbackstage Bereiche';
         $hubMoney     = $isEnglishPage ? 'Money' : 'Geld';
         $hubLaw       = $isEnglishPage ? 'Law' : 'Recht';
         $hubSocial    = $isEnglishPage ? 'Social' : 'Soziales';
+        $hubOrganisation = $isEnglishPage ? 'Organisation' : 'Organisation';
         ?>
   <footer class="site-footer unified-site-footer" role="contentinfo" aria-label="<?= htmlspecialchars($ariaLabel, ENT_QUOTES, 'UTF-8') ?>">
     <nav class="hub-nav" aria-label="<?= htmlspecialchars($hubNavLabel, ENT_QUOTES, 'UTF-8') ?>">
@@ -48,6 +51,7 @@ if (!function_exists('render_site_footer')) {
       <a class="hub-nav-link<?= $isMoneyPage ? ' hub-nav-active' : '' ?>" href="<?= htmlspecialchars($moneyHref, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($hubMoney, ENT_QUOTES, 'UTF-8') ?></a>
       <a class="hub-nav-link<?= $isLawPage ? ' hub-nav-active' : '' ?>" href="<?= htmlspecialchars($lawHref, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($hubLaw, ENT_QUOTES, 'UTF-8') ?></a>
       <a class="hub-nav-link<?= $isSocialPage ? ' hub-nav-active' : '' ?>" href="<?= htmlspecialchars($socialHref, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($hubSocial, ENT_QUOTES, 'UTF-8') ?></a>
+      <a class="hub-nav-link<?= $isOrganisationPage ? ' hub-nav-active' : '' ?>" href="<?= htmlspecialchars($organisationHref, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($hubOrganisation, ENT_QUOTES, 'UTF-8') ?></a>
     </nav>
     <p>
       <?= htmlspecialchars($disclaimer, ENT_QUOTES, 'UTF-8') ?>
