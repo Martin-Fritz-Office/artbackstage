@@ -133,7 +133,6 @@ $e = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'U
       </div>
     </main>
   </div>
-<?php require_once __DIR__ . '/site_footer.php'; render_site_footer(); ?>
 <?php if (!empty($landingPage['planning_checklist'])): ?>
 <script>
 (function(){
