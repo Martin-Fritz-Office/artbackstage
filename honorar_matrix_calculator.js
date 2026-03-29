@@ -175,24 +175,35 @@ class HonorMatrixCalculator {
 let calculator = null;
 
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('[HonorMatrix] DOMContentLoaded event fired');
   calculator = new HonorMatrixCalculator();
+  console.log('[HonorMatrix] Calculator created');
 
   // Detect language from page or default to German
   const htmlLang = document.documentElement.lang || 'de';
   calculator.setLanguage(htmlLang);
+  console.log('[HonorMatrix] Language set to:', htmlLang);
 
   initializeForm();
+  console.log('[HonorMatrix] Form initialized');
 });
 
 function initializeForm() {
+  console.log('[HonorMatrix] initializeForm() called');
   const disciplineSelect = document.getElementById('discipline');
   const activitySelect = document.getElementById('activity');
   const criteriaSelect = document.getElementById('criteria');
 
-  if (!disciplineSelect) return;
+  if (!disciplineSelect) {
+    console.error('[HonorMatrix] ERROR: discipline select element not found!');
+    return;
+  }
+
+  console.log('[HonorMatrix] Found all form elements');
 
   // Populate disciplines
   const disciplines = calculator.getDisciplines();
+  console.log('[HonorMatrix] Loaded', disciplines.length, 'disciplines');
   disciplines.forEach(disc => {
     const option = document.createElement('option');
     option.value = disc.key;
@@ -202,6 +213,7 @@ function initializeForm() {
 
   // Handle discipline change
   disciplineSelect.addEventListener('change', function(e) {
+    console.log('[HonorMatrix] Discipline changed:', e.target.value);
     activitySelect.innerHTML = '<option value="">' + calculator.getLabel('selectOption') + '</option>';
     criteriaSelect.innerHTML = '<option value="">' + calculator.getLabel('selectOption') + '</option>';
     document.getElementById('numArtists').value = '1';
@@ -221,10 +233,14 @@ function initializeForm() {
 
   // Handle activity change
   activitySelect.addEventListener('change', function(e) {
+    console.log('[HonorMatrix] Activity changed:', e.target.value);
     criteriaSelect.innerHTML = '<option value="">' + calculator.getLabel('selectOption') + '</option>';
     document.getElementById('numArtists').value = '1';
 
-    if (!e.target.value || !disciplineSelect.value) return;
+    if (!e.target.value || !disciplineSelect.value) {
+      console.log('[HonorMatrix] Activity change: missing values, returning');
+      return;
+    }
 
     const criteria = calculator.getCriteria(disciplineSelect.value, e.target.value);
     criteria.forEach(crit => {
@@ -245,23 +261,39 @@ function initializeForm() {
 }
 
 function calculateFee() {
+  console.log('[HonorMatrix] calculateFee() called');
   const disciplineSelect = document.getElementById('discipline');
   const activitySelect = document.getElementById('activity');
   const criteriaSelect = document.getElementById('criteria');
   const numArtistsInput = document.getElementById('numArtists');
   const resultsDiv = document.getElementById('results');
 
+  console.log('[HonorMatrix] Elements found:', {
+    discipline: !!disciplineSelect,
+    activity: !!activitySelect,
+    criteria: !!criteriaSelect,
+    numArtists: !!numArtistsInput,
+    results: !!resultsDiv
+  });
+
   // Validation
   if (!disciplineSelect || !activitySelect || !criteriaSelect || !resultsDiv) {
-    console.error('Required DOM elements not found');
+    console.error('[HonorMatrix] Required DOM elements not found');
     alert(calculator.currentLanguage === 'de' ? 'Fehler: Formularelemente nicht gefunden.' : 'Error: Form elements not found.');
     return;
   }
 
   if (!disciplineSelect.value || !activitySelect.value || !criteriaSelect.value) {
+    console.warn('[HonorMatrix] Missing form values');
     alert(calculator.currentLanguage === 'de' ? 'Bitte wählen Sie alle erforderlichen Optionen.' : 'Please select all required options.');
     return;
   }
+
+  console.log('[HonorMatrix] Form values:', {
+    discipline: disciplineSelect.value,
+    activity: activitySelect.value,
+    criteria: criteriaSelect.value
+  });
 
   const numArtists = parseInt(numArtistsInput.value) || 1;
 
@@ -269,11 +301,24 @@ function calculateFee() {
   const criteriaValueStr = criteriaSelect.value;
   const criteriaValue = parseInt(criteriaValueStr);
 
+  console.log('[HonorMatrix] Parsed criteria:', {
+    original: criteriaValueStr,
+    parsed: criteriaValue,
+    isNaN: isNaN(criteriaValue)
+  });
+
   if (isNaN(criteriaValue)) {
-    console.error('Invalid criteria value:', criteriaValueStr);
+    console.error('[HonorMatrix] Invalid criteria value:', criteriaValueStr);
     alert(calculator.currentLanguage === 'de' ? 'Ungültige Kriteriumauswahl.' : 'Invalid criteria selection.');
     return;
   }
+
+  console.log('[HonorMatrix] Calling calculator.calculate with:', {
+    discipline: disciplineSelect.value,
+    activity: activitySelect.value,
+    criteriaValue: criteriaValue,
+    numArtists: numArtists
+  });
 
   const result = calculator.calculate(
     disciplineSelect.value,
@@ -281,6 +326,8 @@ function calculateFee() {
     criteriaValue,
     numArtists
   );
+
+  console.log('[HonorMatrix] Calculation result:', result);
 
   if (!result) {
     console.error('Calculation returned null for:', {
@@ -304,6 +351,13 @@ function calculateFee() {
 }
 
 function displayResults(result, resultsDiv, activityName) {
+  console.log('[HonorMatrix] displayResults() called with:', {
+    result: result,
+    resultsDivId: resultsDiv.id,
+    resultsDivExists: !!resultsDiv,
+    activityName: activityName
+  });
+
   try {
     const currency = '€';
     const isDe = calculator.currentLanguage === 'de';
@@ -366,21 +420,30 @@ function displayResults(result, resultsDiv, activityName) {
       </div>
     </div>`;
 
+    console.log('[HonorMatrix] Setting innerHTML, length:', html.length);
     resultsDiv.innerHTML = html;
+    console.log('[HonorMatrix] innerHTML set successfully');
+    console.log('[HonorMatrix] Results div now contains:', resultsDiv.innerHTML.substring(0, 100) + '...');
 
     // Ensure the results are visible and scroll into view
     if (resultsDiv.offsetHeight === 0) {
-      console.warn('Results div has zero height after setting innerHTML');
+      console.warn('[HonorMatrix] Results div has zero height after setting innerHTML');
+    } else {
+      console.log('[HonorMatrix] Results div height:', resultsDiv.offsetHeight);
     }
 
     // Use setTimeout to ensure rendering is complete before scrolling
+    console.log('[HonorMatrix] Setting up setTimeout for scroll (100ms)');
     setTimeout(() => {
+      console.log('[HonorMatrix] setTimeout callback executing, calling scrollIntoView');
       resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      console.log('[HonorMatrix] scrollIntoView called');
     }, 100);
 
-    console.log('Results displayed successfully');
+    console.log('[HonorMatrix] Results displayed successfully');
   } catch (error) {
-    console.error('Error in displayResults:', error);
+    console.error('[HonorMatrix] Error in displayResults:', error);
+    console.error('[HonorMatrix] Error stack:', error.stack);
     resultsDiv.innerHTML = '<div class="result-section"><h3>Error</h3><p>' + (calculator.currentLanguage === 'de' ? 'Fehler beim Anzeigen der Ergebnisse' : 'Error displaying results') + '</p></div>';
   }
 }
