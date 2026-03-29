@@ -99,7 +99,7 @@
   function messageFor(score, lowest, hasLowDimension) {
     if (hasLowDimension) {
       return lang === "de"
-      ? `Warnung: Mindestens eine Dimension liegt unter 50. Stärke die Dimension ${lowest.label.toLowerCase()}, bevor du zusagst.`
+      ? `Warnung: Mindestens eine Dimension liegt unter 50. Überprüfe die Dimension ${lowest.label.toUpperCase()}, bevor du zusagst.`
       : `Warning: at least one dimension is below 50. Strengthen the ${lowest.label.toLowerCase()} dimension before committing.`;
     }
     if (score >= 75) {
