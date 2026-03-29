@@ -66,6 +66,7 @@ $landingPage = [
       'icon' => '<circle cx="12" cy="12" r="7.8"></circle><path d="M12 7.8v8.4"></path><path d="M8.7 10.2c0-1.1 1.3-2 3.3-2s3.3.9 3.3 2-1.3 2-3.3 2-3.3.9-3.3 2 1.3 2 3.3 2 3.3-.9 3.3-2"></path>',
       'tools' => [
         ['href' => 'honorarium_questionnaire_en.php', 'label' => 'Honorarium Questionnaire'],
+        ['href' => 'honorar_matrix_calculator_en.php', 'label' => 'Honor Matrix Calculator'],
         ['href' => 'personalplanung_en.php', 'label' => 'Staff planning tool (FAIR PAY 2026)'],
       ],
     ],
