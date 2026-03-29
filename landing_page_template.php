@@ -115,8 +115,11 @@ $e = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'U
 
       <div class="landing-section-header">
         <h2><?= $e($landingPage['section_title']) ?></h2>
+        <?php if (!empty($landingPage['tools_toggle_label'])): ?>
+          <button id="toolsToggleBtn" class="btn btn-outline"><?= $e($landingPage['tools_toggle_label']) ?></button>
+        <?php endif; ?>
       </div>
-      <div class="landing-links">
+      <div class="landing-links" id="landingLinksGrid">
         <?php foreach ($landingPage['tools'] as $tool): ?>
           <a class="tool-link<?= !empty($landingPage['section_theme']) ? ' tool-link-'.$e($landingPage['section_theme']) : '' ?><?= !empty($tool['highlight']) ? ' tool-link-highlight' : '' ?>" href="<?= $e($tool['href']) ?>">
             <span class="tool-icon" aria-hidden="true">
