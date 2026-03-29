@@ -86,11 +86,25 @@ class HonorMatrixCalculator {
 
   calculate(disciplineKey, activityKey, criteriaValue, numArtists = 1) {
     const activity = this.data.disciplines[disciplineKey]?.activities[activityKey];
-    if (!activity) return null;
+    if (!activity) {
+      console.error('Activity not found:', disciplineKey, activityKey);
+      return null;
+    }
 
     const baseFee = activity.baseHonor;
-    const criterion = activity.criteria.find(c => c.value === criteriaValue);
-    if (!criterion) return null;
+
+    // Find criterion - handle both number and string comparisons
+    let criterion = activity.criteria.find(c => c.value === criteriaValue);
+
+    // If not found with strict equality, try with loose equality or string comparison
+    if (!criterion) {
+      criterion = activity.criteria.find(c => c.value == criteriaValue || String(c.value) === String(criteriaValue));
+    }
+
+    if (!criterion) {
+      console.error('Criterion not found. Criteria value:', criteriaValue, 'Available criteria:', activity.criteria.map(c => ({ value: c.value, type: typeof c.value })));
+      return null;
+    }
 
     let totalFee = baseFee * criterion.multiplier;
     let multiplier = criterion.multiplier;
@@ -238,34 +252,63 @@ function calculateFee() {
   const resultsDiv = document.getElementById('results');
 
   // Validation
+  if (!disciplineSelect || !activitySelect || !criteriaSelect || !resultsDiv) {
+    console.error('Required DOM elements not found');
+    alert(calculator.currentLanguage === 'de' ? 'Fehler: Formularelemente nicht gefunden.' : 'Error: Form elements not found.');
+    return;
+  }
+
   if (!disciplineSelect.value || !activitySelect.value || !criteriaSelect.value) {
     alert(calculator.currentLanguage === 'de' ? 'Bitte wählen Sie alle erforderlichen Optionen.' : 'Please select all required options.');
     return;
   }
 
   const numArtists = parseInt(numArtistsInput.value) || 1;
+
+  // Parse criteria value - ensure it's a number
+  const criteriaValueStr = criteriaSelect.value;
+  const criteriaValue = parseInt(criteriaValueStr);
+
+  if (isNaN(criteriaValue)) {
+    console.error('Invalid criteria value:', criteriaValueStr);
+    alert(calculator.currentLanguage === 'de' ? 'Ungültige Kriteriumauswahl.' : 'Invalid criteria selection.');
+    return;
+  }
+
   const result = calculator.calculate(
     disciplineSelect.value,
     activitySelect.value,
-    parseInt(criteriaSelect.value),
+    criteriaValue,
     numArtists
   );
 
   if (!result) {
+    console.error('Calculation returned null for:', {
+      discipline: disciplineSelect.value,
+      activity: activitySelect.value,
+      criteria: criteriaValue
+    });
     alert(calculator.currentLanguage === 'de' ? 'Berechnung fehlgeschlagen.' : 'Calculation failed.');
     return;
   }
 
   // Display results
-  displayResults(result, resultsDiv, activitySelect.options[activitySelect.selectedIndex].text);
+  const selectedActivityText = activitySelect.options[activitySelect.selectedIndex];
+  if (!selectedActivityText) {
+    console.error('Unable to get selected activity text');
+    alert(calculator.currentLanguage === 'de' ? 'Fehler beim Abrufen der Aktivität.' : 'Error retrieving activity.');
+    return;
+  }
+
+  displayResults(result, resultsDiv, selectedActivityText.text);
 }
 
 function displayResults(result, resultsDiv, activityName) {
-  const currency = '€';
-  const isDe = calculator.currentLanguage === 'de';
+  try {
+    const currency = '€';
+    const isDe = calculator.currentLanguage === 'de';
 
-  let html = `
-    <div class="result-section">
+    let html = `<div class="result-section">
       <h3>${isDe ? 'Berechnungsergebnis' : 'Calculation Result'}</h3>
       <div class="result-details">
         <div class="result-row">
@@ -283,12 +326,10 @@ function displayResults(result, resultsDiv, activityName) {
         <div class="result-row">
           <span class="result-label">${isDe ? 'Multiplikator' : 'Multiplier'}:</span>
           <span class="result-value">${result.multiplier}</span>
-        </div>
-  `;
+        </div>`;
 
-  if (result.isGroup && result.numArtists > 1) {
-    html += `
-        <div class="result-row">
+    if (result.isGroup && result.numArtists > 1) {
+      html += `<div class="result-row">
           <span class="result-label">${isDe ? 'Künstler' : 'Artists'}:</span>
           <span class="result-value">${result.numArtists}</span>
         </div>
@@ -299,41 +340,49 @@ function displayResults(result, resultsDiv, activityName) {
         <div class="result-row">
           <span class="result-label">${isDe ? 'Pro Künstler' : 'Per Artist'}:</span>
           <span class="result-value highlight">${result.perArtistFee}${currency}</span>
-        </div>
-    `;
-  }
+        </div>`;
+    }
 
-  html += `
-        <div class="result-row total">
+    html += `<div class="result-row total">
           <span class="result-label">${isDe ? 'Honorar gesamt' : 'Total Fee'}:</span>
           <span class="result-value">${result.totalFee}${currency}</span>
         </div>
-      </div>
-  `;
+      </div>`;
 
-  if (result.notes && result.notes.length > 0) {
-    html += `
-      <div class="notes-section">
+    if (result.notes && result.notes.length > 0) {
+      html += `<div class="notes-section">
         <h4>${isDe ? 'Hinweise' : 'Notes'}:</h4>
         <ul>
           ${result.notes.map(note => `<li>${note}</li>`).join('')}
         </ul>
-      </div>
-    `;
-  }
+      </div>`;
+    }
 
-  html += `
-      <div class="info-box">
+    html += `<div class="info-box">
         <p><strong>${isDe ? 'Disclaimer' : 'Disclaimer'}:</strong> ${isDe ?
           'Diese Berechnung basiert auf der Honorarmatrix des Landes NRW (Stand: 23. Dezember 2025). Die angegebenen Beträge sind Mindesthonorare, keine Obergrenzen. Weitere Kostenpositionen können zusätzlich verhandelt werden.' :
           'This calculation is based on the NRW honor matrix (Status: December 23, 2025). The stated amounts are minimum fees, not upper limits. Additional cost positions can be negotiated separately.'
         }</p>
       </div>
-    </div>
-  `;
+    </div>`;
 
-  resultsDiv.innerHTML = html;
-  resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    resultsDiv.innerHTML = html;
+
+    // Ensure the results are visible and scroll into view
+    if (resultsDiv.offsetHeight === 0) {
+      console.warn('Results div has zero height after setting innerHTML');
+    }
+
+    // Use setTimeout to ensure rendering is complete before scrolling
+    setTimeout(() => {
+      resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+
+    console.log('Results displayed successfully');
+  } catch (error) {
+    console.error('Error in displayResults:', error);
+    resultsDiv.innerHTML = '<div class="result-section"><h3>Error</h3><p>' + (calculator.currentLanguage === 'de' ? 'Fehler beim Anzeigen der Ergebnisse' : 'Error displaying results') + '</p></div>';
+  }
 }
 
 function resetForm() {
