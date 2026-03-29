@@ -92,7 +92,7 @@ class HonorMatrixCalculator {
     const criterion = activity.criteria.find(c => c.value === criteriaValue);
     if (!criterion) return null;
 
-    let totalFee = criterion.value;
+    let totalFee = baseFee * criterion.multiplier;
     let multiplier = criterion.multiplier;
     let perArtistFee = totalFee;
     let groupDiscount = 1;
