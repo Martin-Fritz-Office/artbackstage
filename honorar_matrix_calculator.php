@@ -5,6 +5,9 @@
  */
 
 require_once 'seo_meta.php';
+
+$headerTitle = 'Honorarmatrix-Rechner';
+$headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deutschen Honorarmatrix';
 ?>
 <!DOCTYPE html>
 <html lang="de">

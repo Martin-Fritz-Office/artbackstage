@@ -5,6 +5,9 @@
  */
 
 require_once 'seo_meta.php';
+
+$headerTitle = 'Honor Matrix Calculator';
+$headerSubtitle = 'Calculate fair artist fees based on the German honor matrix';
 ?>
 <!DOCTYPE html>
 <html lang="en">
