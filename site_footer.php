@@ -29,7 +29,7 @@ if (!function_exists('render_site_footer')) {
             $privacyHref = 'datenschutz.php';
             $privacyLabel = 'Datenschutz';
             $feedbackHref = 'feedback.php';
-            $feedbackLabel = 'Feedback';
+            $feedbackLabel = 'Feedback und Meetings';
         }
         $moneyHref = $isEnglishPage ? 'index_money_en.php' : 'index_money.php';
         $lawHref   = 'index_law.php';
