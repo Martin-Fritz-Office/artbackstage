@@ -103,6 +103,17 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
             border-left: 4px solid #0066cc;
         }
 
+        #results {
+            display: block;
+            width: 100%;
+            min-height: auto;
+        }
+
+        #results .result-section {
+            display: block;
+            width: 100%;
+        }
+
         .result-section h3 {
             color: #0066cc;
             margin-top: 0;
@@ -113,6 +124,8 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
             padding: 1.5rem;
             border-radius: 4px;
             margin: 1rem 0;
+            display: block;
+            width: 100%;
         }
 
         .result-row {
@@ -120,6 +133,8 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
             justify-content: space-between;
             padding: 0.75rem 0;
             border-bottom: 1px solid #e0e0e0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .result-row:last-child {
@@ -139,16 +154,25 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
         .result-label {
             font-weight: bold;
             color: #333;
+            display: block;
+            flex-shrink: 0;
         }
 
         .result-value {
             text-align: right;
             color: #666;
+            display: block;
+            flex-shrink: 0;
         }
 
         .result-value.highlight {
             color: #0066cc;
             font-weight: bold;
+        }
+
+        h3, h4 {
+            display: block;
+            visibility: visible;
         }
 
         .notes-section {
@@ -157,6 +181,8 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
             border-radius: 4px;
             margin-top: 1.5rem;
             border-left: 4px solid #0066cc;
+            display: block;
+            width: 100%;
         }
 
         .notes-section h4 {
@@ -167,11 +193,13 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
         .notes-section ul {
             margin: 0;
             padding-left: 1.5rem;
+            display: block;
         }
 
         .notes-section li {
             margin-bottom: 0.5rem;
             color: #555;
+            display: list-item;
         }
 
         .info-box {
@@ -181,11 +209,14 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
             padding: 1rem;
             margin-top: 1rem;
             color: #856404;
+            display: block;
+            width: 100%;
         }
 
         .info-box p {
             margin: 0;
             font-size: 0.95rem;
+            display: block;
         }
 
         .hidden {
