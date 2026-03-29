@@ -280,8 +280,15 @@ require_once 'seo_meta.php';
                 </ul>
 
                 <h3>Quelle</h3>
-                <p>Anlage zu Nummer 2.2, "Matrix Basishonorare mit Stufen", Stand: 23. Dezember 2025</p>
-                <p>Verantwortlich: Ministerium für Kultur und Wissenschaft des Landes Nordrhein-Westfalen</p>
+                <p><strong>Anlage zu Nummer 2.2, "Matrix Basishonorare mit Stufen"</strong><br>
+                Stand: 23. Dezember 2025</p>
+                <p>Verantwortlich: Ministerium für Kultur und Wissenschaft des Landes Nordrhein-Westfalen (MKW)</p>
+
+                <p><strong>Offizielle Ressourcen:</strong></p>
+                <ul>
+                    <li><a href="https://www.mkw.nrw/themen/kultur/kunst-und-kulturfoerderung/honoraruntergrenzen" target="_blank" rel="noopener noreferrer">MKW - Honoraruntergrenzen und Künstlerförderung</a></li>
+                    <li><a href="data/honorarmatrix_stand_dezember_2025.pdf" target="_blank" rel="noopener noreferrer">PDF: Honorarmatrix Stand Dezember 2025 (555 KB)</a></li>
+                </ul>
             </div>
         </div>
     </main>

@@ -280,8 +280,15 @@ require_once 'seo_meta.php';
                 </ul>
 
                 <h3>Source</h3>
-                <p>Annex to Item 2.2, "Matrix Base Fees with Levels", Status: December 23, 2025</p>
-                <p>Responsible: Ministry of Culture and Science of the State of North Rhine-Westphalia</p>
+                <p><strong>Annex to Item 2.2, "Matrix Base Fees with Levels"</strong><br>
+                Status: December 23, 2025</p>
+                <p>Responsible: Ministry of Culture and Science of the State of North Rhine-Westphalia (MKW)</p>
+
+                <p><strong>Official Resources:</strong></p>
+                <ul>
+                    <li><a href="https://www.mkw.nrw/themen/kultur/kunst-und-kulturfoerderung/honoraruntergrenzen" target="_blank" rel="noopener noreferrer">MKW - Artist Fees and Honorar Guidelines</a></li>
+                    <li><a href="data/honorarmatrix_stand_dezember_2025.pdf" target="_blank" rel="noopener noreferrer">PDF: Honor Matrix December 2025 (555 KB)</a></li>
+                </ul>
             </div>
         </div>
     </main>
