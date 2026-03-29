@@ -121,7 +121,7 @@ $landingPage = [
     ],
   ],
   'section_title' => 'Alle Rechner im Überblick',
-  'tools_toggle_label' => 'Alle 13 Tools anzeigen',
+  'tools_toggle_label' => 'Alle 14 Tools anzeigen',
   'footer' => 'Die artbackstage Toolsammlung ist in laufender BETA-Entwicklung als Teil des Lehrauftrags "Kunst im Kontext (Recht, Geld und Fairness) an der Kunstuniversität Linz. Verwendet werden unter anderem Materialien der IG Bildende Kunst, der KUPF Oberösterreich und aus dem Fair Pay Prozess der IG Kultur. Es werden keine personalisierten Daten gespeichert. Teilweise KI generiert. Keine Haftung.',
   'tools' => [
     ['href' => 'forecast.php', 'title' => 'Jahresumsatz- & Gewinnprognose', 'description' => 'Vollständige Prognose mit Fragen, Sheet und Diagrammen.', 'icon' => '<path d="M4 19.5h16"></path><path d="M6 16l3.2-3.2 2.7 2.6 5-5"></path><circle cx="17" cy="8" r="1.2"></circle>'],
@@ -131,6 +131,7 @@ $landingPage = [
     ['href' => 'net_income_carousel.php', 'title' => 'Jahresnettoeinkommen Schritt für Schritt', 'description' => 'Didaktische Serie zur nachvollziehbaren Netto-Berechnung.', 'icon' => '<rect x="4" y="5" width="16" height="14" rx="2.5"></rect><path d="M4 10.5h16"></path><path d="M8 14h2"></path><path d="M12 14h4"></path>'],
     ['href' => 'curator_viability_carousel.php', 'title' => 'Projekt-Check für freie Kurator*innen', 'description' => '13 Fragen für die Entscheidung: zusagen, nachverhandeln oder absagen.', 'icon' => '<path d="M9.2 12.2l1.8 1.8 3.8-4"></path><circle cx="12" cy="12" r="8"></circle>'],
     ['href' => 'honorarium_questionnaire.php', 'title' => 'Honorar-Fragebogen (Leitfaden 2026)', 'description' => 'Ermittelt einen fairen Richtwert für künstlerische Honorare.', 'icon' => '<path d="M12 3.8 4.8 7.1v4.8c0 4.3 2.9 7.5 7.2 8.7 4.3-1.2 7.2-4.4 7.2-8.7V7.1z"></path><path d="M9.3 12.2h5.4"></path><path d="M12 9.5v5.4"></path>'],
+    ['href' => 'honorar_matrix_calculator.php', 'title' => 'Honorarmatrix-Rechner', 'description' => 'Interaktiver Rechner für Künstlerhonorare basierend auf Honorarmatrizen mit Stufen.', 'icon' => '<rect x="5" y="5" width="14" height="14" rx="1"></rect><path d="M5 10h14"></path><path d="M5 15h14"></path><path d="M10 5v14"></path><path d="M15 5v14"></path>'],
     ['href' => 'gallery_contract_reality_check.php', 'title' => 'Gallery Contract Reality Check', 'description' => '12 Fragen zum finanziellen Realitätscheck von Galerieverträgen.', 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 7 19V6a1.5 1.5 0 0 1 1-1.4"></path><path d="M14 4.5V9h4"></path><path d="M9.5 13h5"></path><path d="M9.5 16h5"></path>'],
     ['href' => 'salary_data.php', 'title' => 'Gehalts- & Honorar-Daten Explorer', 'description' => 'Durchsuche 100 Kunst-/Museumsrollen inkl. Gehalt, Tagessatz, Projektfee und Quellenlinks.', 'icon' => '<path d="M5 18h14"></path><path d="M7.5 15V9"></path><path d="M12 15V6"></path><path d="M16.5 15v-3"></path>'],
     ['href' => 'bildrecht_tarifliste.php', 'title' => 'Bildrecht Tarifliste Explorer', 'description' => 'Durchsuche die aktuellen Bildrecht-Tarife nach Kategorie, Abschnitt und Gebührenzeilen.', 'icon' => '<path d="M5 7h14"></path><path d="M5 12h14"></path><path d="M5 17h9"></path><circle cx="17.5" cy="17" r="1.5"></circle>'],
