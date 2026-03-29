@@ -179,5 +179,6 @@ $e = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'U
   });
 })();
 </script>
+<?php require_once __DIR__ . '/site_footer.php'; render_site_footer($landingPage['lang'] ?? null); ?>
 </body>
 </html>
