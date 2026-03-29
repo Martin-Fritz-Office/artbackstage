@@ -342,11 +342,9 @@ $page_description = "100 Empfehlungen für Vereinsvorstände - Zusammengestellt 
             <div id="tipps-container"></div>
         </div>
 
-        <footer>
-            <p>&copy; 2024 | Quelle: Prüfberichte des Stadtrechnungshofes Wien (StRH) und des Kontrollamts Wien (KA)</p>
-        </footer>
     </div>
 
     <script src="vereinstipps.js"></script>
+<?php require_once __DIR__ . '/site_footer.php'; render_site_footer(); ?>
 </body>
 </html>
