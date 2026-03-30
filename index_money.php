@@ -10,7 +10,7 @@ $landingPage = [
   'home' => ['href' => 'index.php', 'label' => 'Bereichsauswahl'],
   'language_switch' => ['href' => 'index_money_en.php', 'label' => 'English'],
   'credibility_badge' => [
-    'text' => 'Basierend auf österreichischem Steuerrecht (2025), FAIR PAY 2026 & KU-Linz-Lehrauftrag',
+    'text' => 'Tools und Informationen für den Lehrauftrag "Kunst im Kontext (Recht, Geld, Fairness)" an der Kunstuniversität Linz',
     'sources_href' => 'sources.php',
     'sources_label' => 'Quellen ansehen',
   ],
