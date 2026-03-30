@@ -88,6 +88,7 @@ const honorMatrixData = {
     },
     bildende_kunst: {
       name: 'Bildende Kunst',
+      roles: 'Maler/ Malerin, Zeichner/ Zeichnerin, Illustrator/ Illustratorin, künstl. Fotograf/ Fotografin, Fotodesigner/ Fotodesignerin, Werbefotograf/ Werbefotografin, Bildhauer/ Bildhauerin, Konzeptkünstler/ Konzeptkünstlerin, experiment. Künstler/ Künstlerin, Medienkünstler/ Medienkünstlerin, Performance-/ Aktionskünstler/ Performance-/ Aktionskünstlerin',
       activities: {
         ausstellung_einzel: {
           name: 'Ausstellungsvergütung - Einzel',
@@ -154,7 +155,7 @@ const honorMatrixData = {
       name: 'Musik',
       activities: {
         popmusik_vorstellung: {
-          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin - Vorstellung',
+          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin, Musiker/ Musikerin (Jazz, improvisierte Musik), Sänger/ Sängerin (Pop, Rock, Jazz, Unterhaltung) - Vorstellung',
           baseHonor: 250,
           duration: 'abendfüllendes Konzert',
           criteria: [
@@ -164,7 +165,7 @@ const honorMatrixData = {
           ]
         },
         popmusik_probe: {
-          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin - dazugehörige Durchlaufproben',
+          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin, Musiker/ Musikerin (Jazz, improvisierte Musik), Sänger/ Sängerin (Pop, Rock, Jazz, Unterhaltung) - dazugehörige Durchlaufproben',
           baseHonor: 180,
           duration: 'ca. 6 Stunden',
           criteria: [
@@ -174,7 +175,7 @@ const honorMatrixData = {
           ]
         },
         orchester_vorstellung: {
-          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik) - Vorstellung',
+          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik), Sänger/ Sängerin (Lied, Operette, Oper, Chor) - Vorstellung',
           baseHonor: 250,
           duration: 'abendfüllendes Konzert',
           criteria: [
@@ -184,7 +185,7 @@ const honorMatrixData = {
           ]
         },
         orchester_probe: {
-          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik) - dazugehörige Durchlaufproben',
+          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik), Sänger/ Sängerin (Lied, Operette, Oper, Chor) - dazugehörige Durchlaufproben',
           baseHonor: 180,
           duration: 'ca. 6 Stunden',
           criteria: [
