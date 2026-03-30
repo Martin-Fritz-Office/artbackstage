@@ -41,6 +41,12 @@ $e = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'U
           <a class="btn btn-hero-ghost" href="<?= $e($landingPage['home']['href']) ?>"><?= $e($landingPage['home']['label']) ?></a>
           <a class="btn btn-hero-ghost" href="<?= $e($landingPage['language_switch']['href']) ?>"><?= $e($landingPage['language_switch']['label']) ?></a>
         </div>
+        <?php if (!empty($landingPage['credibility_badge'])): ?>
+          <p class="credibility-badge">
+            <?= $e($landingPage['credibility_badge']['text']) ?>
+            <a href="<?= $e($landingPage['credibility_badge']['sources_href']) ?>"><?= $e($landingPage['credibility_badge']['sources_label']) ?></a>
+          </p>
+        <?php endif; ?>
       </div>
     </div>
 
