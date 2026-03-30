@@ -69,7 +69,7 @@ $landingPage = [
       'icon' => '<circle cx="12" cy="12" r="7.8"></circle><path d="M12 7.8v8.4"></path><path d="M8.7 10.2c0-1.1 1.3-2 3.3-2s3.3.9 3.3 2-1.3 2-3.3 2-3.3.9-3.3 2 1.3 2 3.3 2 3.3-.9 3.3-2"></path>',
       'tools' => [
         ['href' => 'honorarium_questionnaire.php', 'label' => 'Honorar-Fragebogen (Leitfaden 2026)'],
-        ['href' => 'honorar_matrix_calculator.php', 'label' => 'Honorarmatrix-Rechner'],
+        ['href' => 'honorar_matrix_calculator.php', 'label' => 'NRW Mindesthonorar-Rechner'],
         ['href' => 'personalplanung.php', 'label' => 'Personalplanung (FAIR PAY 2026)'],
         ['href' => 'salary_data.php', 'label' => 'Gehalts- & Honorar-Daten Explorer'],
         ['href' => 'bildrecht_tarifliste.php', 'label' => 'Bildrecht Tarifliste Explorer'],
