@@ -6,6 +6,11 @@ $landingPage = [
   'subtitle' => 'Urheberrecht verstehen, typische Nutzungssituationen prüfen und zentrale Begriffe mit dem Quiz trainieren.',
   'home' => ['href' => 'index.php', 'label' => 'Bereichsauswahl'],
   'language_switch' => ['href' => 'index_money.php', 'label' => 'Zu Money'],
+  'credibility_badge' => [
+    'text' => 'Basierend auf österreichischem und deutschem Urheberrecht, Datenschutz & IG-Bildende-Kunst-Material',
+    'sources_href' => 'sources.php',
+    'sources_label' => 'Quellen ansehen',
+  ],
   'story_intro_title' => 'Dein Einstieg in artbackstage | Law',
   'story_intro' => 'Starte mit dem UrhG-Quiz und nutze danach die Gesetzesquelle für Vertiefung und Prüfung im Kontext deiner Praxis.',
   'situations_title' => 'Typische Situationen im Rechtskontext',

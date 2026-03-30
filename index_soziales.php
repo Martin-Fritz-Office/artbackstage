@@ -6,6 +6,11 @@ $landingPage = [
   'subtitle' => 'Soziale Absicherung im Kulturbereich: Fokus auf Einkommen, Gender und Teilzeit.',
   'home' => ['href' => 'index.php', 'label' => 'Bereichsauswahl'],
   'language_switch' => ['href' => 'index_en.php', 'label' => 'English'],
+  'credibility_badge' => [
+    'text' => 'Basierend auf österreichischen SVS-Daten, GenderReport 2024 und Kunststatistiken',
+    'sources_href' => 'sources.php',
+    'sources_label' => 'Quellen ansehen',
+  ],
   'story_intro_title' => 'Sozialer Überblick',
   'story_intro' => 'Hier findest du die Branchen-Tabelle zu Einkommen, Frauenanteil und Teilzeitquote sowie eine kompakte Gender-Report-Zusammenfassung mit Originalquellen.',
   'situations_title' => 'Direkter Einstieg',

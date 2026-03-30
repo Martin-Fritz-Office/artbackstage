@@ -5,6 +5,11 @@ $landingPage = [
   'subtitle' => 'Social context in the cultural sector: focus on income, gender, and part-time work.',
   'home' => ['href' => 'index_en.php', 'label' => 'Section selection'],
   'language_switch' => ['href' => 'index_soziales.php', 'label' => 'Deutsch'],
+  'credibility_badge' => [
+    'text' => 'Built on Austrian SVS data, GenderReport 2024 & arts sector statistics',
+    'sources_href' => 'sources_en.php',
+    'sources_label' => 'View sources',
+  ],
   'story_intro_title' => 'Social overview',
   'story_intro' => 'Here you find the sector table on income, share of women, and part-time rates, plus a concise Gender Report summary with original source links.',
   'situations_title' => 'Direct entry points',
