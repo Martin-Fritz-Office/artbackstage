@@ -9,11 +9,6 @@ $landingPage = [
   'subtitle' => 'Kenne deine Zahlen.',
   'home' => ['href' => 'index.php', 'label' => 'Bereichsauswahl'],
   'language_switch' => ['href' => 'index_money_en.php', 'label' => 'English'],
-  'credibility_badge' => [
-    'text' => 'Basierend auf österreichischem Steuerrecht (2025), FAIR PAY 2026 & KU-Linz-Lehrauftrag',
-    'sources_href' => 'sources.php',
-    'sources_label' => 'Quellen ansehen',
-  ],
   'onboarding_block' => [
     'text' => 'Noch nicht sicher, wo du anfangen sollst? Starte mit der Jahresprognose — 22 Fragen, die zeigen, ob dein Setup finanziell tragfähig ist.',
     'cta_label' => 'Hier starten →',

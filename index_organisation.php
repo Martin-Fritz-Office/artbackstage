@@ -9,11 +9,6 @@ $landingPage = [
   'subtitle' => 'Governance, Prüfung, Transparenz.',
   'home' => ['href' => 'index.php', 'label' => 'Bereichsauswahl'],
   'language_switch' => ['href' => 'index_organisation_en.php', 'label' => 'English'],
-  'credibility_badge' => [
-    'text' => 'Basierend auf österreichischen Vereinsgesetzen, NPO-Richtlinien und Best Practices',
-    'sources_href' => 'sources.php',
-    'sources_label' => 'Quellen ansehen',
-  ],
   'story_intro_title' => 'Dein Einstieg in artbackstage | Organisation',
   'story_intro' => 'Kleine und mittlere Vereine brauchen klare Strukturen: von der Satzung über interne Kontrollen bis zur Prüfungsvorbereitung. Diese Tools begleiten dich – lokal mit 100 Tipps oder mit KI-gestützter semantischer Suche über 22.000 Empfehlungen.',
   'situations_title' => 'Typische Situationen und direkte Tool-Empfehlungen',
