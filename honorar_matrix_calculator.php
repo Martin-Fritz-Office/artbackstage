@@ -1,13 +1,13 @@
 <?php
 /**
- * Honor Matrix Calculator - German Version
+ * NRW Mindesthonorare Calculator - German Version
  * Interactive fee calculator based on German artist fee guidelines
  */
 
 require_once 'seo_meta.php';
 
-$headerTitle = 'Honorarmatrix-Rechner';
-$headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deutschen Honorarmatrix';
+$headerTitle = 'Nordrhein-Westfalen Honorarmatrix-Rechner';
+$headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der NRW-Honorarmatrix';
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -15,7 +15,7 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der deuts
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Honorarmatrix-Rechner - artbackstage</title>
-    <meta name="description" content="Interaktiver Rechner für Künstlerhonorare basierend auf der deutschen Honorarmatrix (Basishonorare mit Stufen). Berechnen Sie faire Gebühren für verschiedene künstlerische Tätigkeiten.">
+    <meta name="description" content="Interaktiver Rechner für Künstlerhonorare basierend auf der Richtlinie zu Honoraruntergrenzen des Landes NRW  (Basishonorare mit Stufen). Berechnen Sie faire Gebühren für verschiedene künstlerische Tätigkeiten.">
     <meta name="keywords" content="Honorarmatrix, Künstlerhonorar, Fee Calculator, Basishonorare, NRW">
     <link rel="stylesheet" href="style.css">
     <style>
