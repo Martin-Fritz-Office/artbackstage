@@ -6,408 +6,409 @@
 const honorMatrixData = {
   disciplines: {
     wort: {
-      name: 'Wort (Literature)',
+      name: 'Wort',
       activities: {
         autor_lesung_einzel: {
-          name: 'Author - Reading (Individual)',
+          name: 'Autor/ Autorin - Lesung Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         autor_lesung_gruppe: {
-          name: 'Author - Reading (Group)',
+          name: 'Autor/ Autorin - Lesung Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         sprecher_einzel: {
-          name: 'Speaker (Individual)',
+          name: 'Sprecher/ Sprecherin - Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         sprecher_gruppe: {
-          name: 'Speaker (Group)',
+          name: 'Sprecher/ Sprecherin - Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         uebersetzer_einzel: {
-          name: 'Literary Translator (Individual)',
+          name: 'Literarischer Übersetzer/ Literarische Übersetzerin - Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         uebersetzer_gruppe: {
-          name: 'Literary Translator (Group)',
+          name: 'Literarischer Übersetzer/ Literarische Übersetzerin - Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         moderation_einzel: {
-          name: 'Moderation (Individual)',
+          name: 'Die Lesung begleitende Moderation - Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         },
         moderation_gruppe: {
-          name: 'Moderation (Group)',
+          name: 'Die Lesung begleitende Moderation - Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: '1-50 spectators', value: 250 },
-            { multiplier: 1.5, label: '50-100 spectators', value: 375 },
-            { multiplier: 2, label: '100+ spectators', value: 500 }
+            { multiplier: 1, label: '1-50 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '50-100 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'mehr als 100 Zuschauende', value: 500 }
           ]
         }
       }
     },
     bildende_kunst: {
-      name: 'Bildende Kunst (Visual Arts)',
+      name: 'Bildende Kunst',
+      roles: 'Maler/ Malerin, Zeichner/ Zeichnerin, Illustrator/ Illustratorin, künstl. Fotograf/ Fotografin, Fotodesigner/ Fotodesignerin, Werbefotograf/ Werbefotografin, Bildhauer/ Bildhauerin, Konzeptkünstler/ Konzeptkünstlerin, experiment. Künstler/ Künstlerin, Medienkünstler/ Medienkünstlerin, Performance-/ Aktionskünstler/ Performance-/ Aktionskünstlerin',
       activities: {
         ausstellung_einzel: {
-          name: 'Exhibition (Individual)',
+          name: 'Ausstellungsvergütung - Einzel',
           baseHonor: 600,
-          duration: '~4 weeks (only first 8 weeks paid)',
+          duration: 'ca. 4 Wochen (Zu vergüten sind lediglich die ersten 8 Wochen der Ausstellung)',
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 600 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 900 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 1200 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 600 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 900 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 1200 }
           ]
         },
         ausstellung_gruppe: {
-          name: 'Exhibition (Group)',
+          name: 'Ausstellungsvergütung - Gruppen',
           baseHonor: 600,
-          duration: '~4 weeks (only first 8 weeks paid)',
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          duration: 'ca. 4 Wochen (Zu vergüten sind lediglich die ersten 8 Wochen der Ausstellung)',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 600 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 900 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 1200 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 600 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 900 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 1200 }
           ]
         },
         performance_einzel: {
-          name: 'Performance (Individual)',
+          name: 'Performance - Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 250 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 375 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 500 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 250 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 375 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 500 }
           ]
         },
         performance_gruppe: {
-          name: 'Performance (Group)',
+          name: 'Performance - Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 250 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 375 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 500 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 250 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 375 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 500 }
           ]
         },
         film_screening_einzel: {
-          name: 'Film/Video Screening (Individual)',
+          name: 'Film- und Videoscreening - Einzel',
           baseHonor: 250,
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 250 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 375 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 500 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 250 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 375 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 500 }
           ]
         },
         film_screening_gruppe: {
-          name: 'Film/Video Screening (Group)',
+          name: 'Film- und Videoscreening - Gruppen',
           baseHonor: 250,
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: 'Socio-cultural, third places, educational institutions', value: 250 },
-            { multiplier: 1.5, label: 'Private/public museums & art associations <100k visitors/year, galleries', value: 375 },
-            { multiplier: 2, label: 'Private/public museums & art associations >100k visitors/year', value: 500 }
+            { multiplier: 1, label: 'Soziokultur, Dritte Orte, Bildungseinrichtungen', value: 250 },
+            { multiplier: 1.5, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen unter 100.000 Besuchern pro Jahr, Galerien', value: 375 },
+            { multiplier: 2, label: 'Private und Öffentlich-getragene Museen und Kunstvereine mit Besucherzahlen über 100.000 Besuchern pro Jahr', value: 500 }
           ]
         }
       }
     },
     musik: {
-      name: 'Musik (Music)',
+      name: 'Musik',
       activities: {
         popmusik_vorstellung: {
-          name: 'Pop/Rock/Jazz Performance',
+          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin, Musiker/ Musikerin (Jazz, improvisierte Musik), Sänger/ Sängerin (Pop, Rock, Jazz, Unterhaltung) - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening concert',
+          duration: 'abendfüllendes Konzert',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 250 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 375 },
-            { multiplier: 2, label: '1,500+ spectators', value: 500 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 500 }
           ]
         },
         popmusik_probe: {
-          name: 'Pop/Rock/Jazz Rehearsal',
+          name: 'Tanz- und Popmusiker/ Tanz- und Popmusikerin, Musiker/ Musikerin (Jazz, improvisierte Musik), Sänger/ Sängerin (Pop, Rock, Jazz, Unterhaltung) - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 180 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 270 },
-            { multiplier: 2, label: '1,500+ spectators', value: 360 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 270 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 360 }
           ]
         },
         orchester_vorstellung: {
-          name: 'Classical/Orchestra Performance',
+          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik), Sänger/ Sängerin (Lied, Operette, Oper, Chor) - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening concert',
+          duration: 'abendfüllendes Konzert',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 250 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 375 },
-            { multiplier: 2, label: '1,500+ spectators', value: 500 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 500 }
           ]
         },
         orchester_probe: {
-          name: 'Classical/Orchestra Rehearsal',
+          name: 'Musiker/ Musikerin (Orchester-, Kammer-, Bühnenmusik), Sänger/ Sängerin (Lied, Operette, Oper, Chor) - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 180 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 270 },
-            { multiplier: 2, label: '1,500+ spectators', value: 360 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 270 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 360 }
           ]
         },
         solist_vorstellung: {
-          name: 'Soloist Performance',
+          name: 'Solist/ Solistin; Einzelkünstler/ Einzelkünstlerin - Vorstellung',
           baseHonor: 300,
-          duration: 'full evening concert',
+          duration: 'abendfüllendes Konzert',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 300 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 450 },
-            { multiplier: 2, label: '1,500+ spectators', value: 600 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 300 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 450 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 600 }
           ]
         },
         solist_probe: {
-          name: 'Soloist Rehearsal',
+          name: 'Solist/ Solistin; Einzelkünstler/ Einzelkünstlerin - dazugehörige Durchlaufproben',
           baseHonor: 250,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 250 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 375 },
-            { multiplier: 2, label: '1,500+ spectators', value: 500 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 500 }
           ]
         },
         dirigent_vorstellung: {
-          name: 'Conductor Performance',
+          name: 'Dirigent/ Dirigentin - Vorstellung',
           baseHonor: 300,
-          duration: 'full evening concert',
+          duration: 'abendfüllendes Konzert',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 300 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 450 },
-            { multiplier: 2, label: '1,500+ spectators', value: 600 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 300 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 450 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 600 }
           ]
         },
         dirigent_probe: {
-          name: 'Conductor Rehearsal',
+          name: 'Dirigent/ Dirigentin - dazugehörige Durchlaufproben',
           baseHonor: 250,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 250 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 375 },
-            { multiplier: 2, label: '1,500+ spectators', value: 500 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 375 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 500 }
           ]
         },
         chorleiter_vorstellung: {
-          name: 'Choir Director Performance',
+          name: 'Chorleiter/ Chorleiterin, Musik. Leiter/ Leiterin - Vorstellung',
           baseHonor: 270,
-          duration: 'full evening concert',
+          duration: 'abendfüllendes Konzert',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 270 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 405 },
-            { multiplier: 2, label: '1,500+ spectators', value: 540 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 270 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 405 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 540 }
           ]
         },
         chorleiter_probe: {
-          name: 'Choir Director Rehearsal',
+          name: 'Chorleiter/ Chorleiterin, Musik. Leiter/ Leiterin - dazugehörige Durchlaufproben',
           baseHonor: 200,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 500 spectators', value: 200 },
-            { multiplier: 1.5, label: '500-1,500 spectators', value: 300 },
-            { multiplier: 2, label: '1,500+ spectators', value: 400 }
+            { multiplier: 1, label: 'bis 500 Zuschauende', value: 200 },
+            { multiplier: 1.5, label: '500-1.500 Zuschauende', value: 300 },
+            { multiplier: 2, label: 'über 1.500 Zuschauende', value: 400 }
           ]
         }
       }
     },
     darstellende_kunst: {
-      name: 'Darstellende Kunst (Performing Arts)',
+      name: 'Darstellende Kunst',
       activities: {
         taenzer_vorstellung: {
-          name: 'Dancer Performance',
+          name: 'Tänzer/ Tänzerin (Ballett, Tanztheater, Musical, Show, Bühne) - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         taenzer_probe: {
-          name: 'Dancer Rehearsal',
+          name: 'Tänzer/ Tänzerin (Ballett, Tanztheater, Musical, Show, Bühne) - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 180 },
-            { multiplier: 1.5, label: '100+ spectators', value: 270 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 270 }
           ]
         },
         schauspieler_vorstellung: {
-          name: 'Actor Performance',
+          name: 'Schauspieler/ Schauspielerin (Bühne), Performer/ Performerin - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         schauspieler_probe: {
-          name: 'Actor Rehearsal',
+          name: 'Schauspieler/ Schauspielerin (Bühne), Performer/ Performerin - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 180 },
-            { multiplier: 1.5, label: '100+ spectators', value: 270 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 270 }
           ]
         },
         puppenspieler_vorstellung: {
-          name: 'Puppet/Marionette Player Performance',
+          name: 'Puppen-, Marionetten-, Figurenspieler/ -spielerin - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         puppenspieler_probe: {
-          name: 'Puppet/Marionette Player Rehearsal',
+          name: 'Puppen-, Marionetten-, Figurenspieler/ -spielerin - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 180 },
-            { multiplier: 1.5, label: '100+ spectators', value: 270 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 270 }
           ]
         },
         kabarett_vorstellung: {
-          name: 'Cabaret/Comedy Performance',
+          name: 'Kabarettist/ Kabarettistin, Comedian, Artist/ Artistin, Clown/ Clownin, Zauberer/ Zauberin - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         kabarett_probe: {
-          name: 'Cabaret/Comedy Rehearsal',
+          name: 'Kabarettist/ Kabarettistin, Comedian, Artist/ Artistin, Clown/ Clownin, Zauberer/ Zauberin - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 180 },
-            { multiplier: 1.5, label: '100+ spectators', value: 270 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 270 }
           ]
         },
         kindertheater_vorstellung: {
-          name: 'Children\'s Theater Performance',
+          name: 'Kinder- und Jugendtheater - Vorstellung',
           baseHonor: 250,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 200 spectators', value: 250 },
-            { multiplier: 1.5, label: '200+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 200 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 200 Zuschauende', value: 375 }
           ]
         },
         kindertheater_probe: {
-          name: 'Children\'s Theater Rehearsal',
+          name: 'Kinder- und Jugendtheater - dazugehörige Durchlaufproben',
           baseHonor: 180,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 200 spectators', value: 180 },
-            { multiplier: 1.5, label: '200+ spectators', value: 270 }
+            { multiplier: 1, label: 'bis 200 Zuschauende', value: 180 },
+            { multiplier: 1.5, label: 'mehr als 200 Zuschauende', value: 270 }
           ]
         },
         sprecher_theater_einzel: {
-          name: 'Theater Speaker (Individual)',
+          name: 'Sprecher/ Sprecherin (Theater) - Einzel',
           baseHonor: 250,
-          duration: '~2 hours',
+          duration: 'ca. 2 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         sprecher_theater_gruppe: {
-          name: 'Theater Speaker (Group)',
+          name: 'Sprecher/ Sprecherin (Theater) - Gruppen',
           baseHonor: 250,
-          duration: '~2 hours',
-          groupRules: '3-9 artists: 1/3 per person, 10+ artists: 1/6 per person',
+          duration: 'ca. 2 Stunden',
+          groupRules: '3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person, Ab 10 Künstlerinnen/Künstler: 1/6 des Honorars pro Person',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         },
         regisseur_vorstellung: {
-          name: 'Director/Choreographer Performance',
+          name: 'Regisseur/ Regisseurin, Choreograph/ Choreographin, Ballett-/ Tanzmeister/ meisterin - Vorstellungsbegleitung',
           baseHonor: 300,
-          duration: 'full evening show',
+          duration: 'abendfüllende Vorstellung',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 300 },
-            { multiplier: 1.5, label: '100+ spectators', value: 450 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 300 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 450 }
           ]
         },
         regisseur_probe: {
-          name: 'Director/Choreographer Rehearsal',
+          name: 'Regisseur/ Regisseurin, Choreograph/ Choreographin, Ballett-/ Tanzmeister/ meisterin - Durchlaufproben',
           baseHonor: 250,
-          duration: '~6 hours',
+          duration: 'ca. 6 Stunden',
           criteria: [
-            { multiplier: 1, label: 'up to 100 spectators', value: 250 },
-            { multiplier: 1.5, label: '100+ spectators', value: 375 }
+            { multiplier: 1, label: 'bis 100 Zuschauende', value: 250 },
+            { multiplier: 1.5, label: 'mehr als 100 Zuschauende', value: 375 }
           ]
         }
       }
     },
     kulturelle_bildung: {
-      name: 'Kulturelle Bildung/Kulturvermittlung (Cultural Education)',
+      name: 'Kulturelle Bildung/ Kulturvermittlung',
       activities: {
         kulturvermittlung: {
-          name: 'Cultural Mediation/Workshops (All Disciplines)',
+          name: 'Kulturvermittlung (alle Sparten)',
           baseHonor: 55,
-          rateType: 'hourly',
-          duration: '60 minutes',
-          note: 'Includes preparation and follow-up. Can be applied to: Literature, Visual Arts, Film, Music, Performing Arts',
+          rateType: 'Stundensatz',
+          duration: '60 Minuten',
+          note: 'Vor- und Nachbereitung sind vom Honorar umfasst. Kann angewendet werden auf: Literatur, Bildende Kunst, Filmkultur, Musik, Darstellende Kunst',
           criteria: [
-            { multiplier: 1, label: 'Standard rate', value: 55 }
+            { multiplier: 1, label: 'Standardsatz', value: 55 }
           ]
         },
         fuehrung: {
-          name: 'Guided Tour (All Disciplines)',
+          name: 'Führung (spartenübergreifend)',
           baseHonor: 55,
-          rateType: 'hourly',
-          duration: '60 minutes',
-          note: 'Includes preparation and follow-up.',
+          rateType: 'Stundensatz',
+          duration: '60 Minuten',
+          note: 'Vor- und Nachbereitung sind vom Honorar umfasst.',
           criteria: [
-            { multiplier: 1, label: 'Standard rate', value: 55 }
+            { multiplier: 1, label: 'Standardsatz', value: 55 }
           ]
         }
       }
@@ -415,16 +416,16 @@ const honorMatrixData = {
   },
 
   groupRules: {
-    standard: 'For 1-2 artists: full fee per person. For 3-9 artists: 1/3 fee per person. For 10+ artists: 1/6 fee per person.',
-    largeEnsemble: 'From 5 musicians: fee can be limited to base honorar per person.'
+    standard: 'Für 1-2 Künstlerinnen/Künstler: volles Honorar pro Person. Für 3-9 Künstlerinnen/Künstler: 1/3 des Honorars pro Person. Für 10+ Künstlerinnen/Künstler: 1/6 des Honorars pro Person.',
+    largeEnsemble: 'Ab 5 Musikerinnen/Musikern: das Honorar pro Künstlerin/Künstler kann auf das Basishonorar beschränkt werden.'
   },
 
   notes: {
     source: 'Anlage zu Nummer 2.2, Stand: 23. Dezember 2025',
-    region: 'North Rhine-Westphalia (NRW), Germany',
-    minimumFees: 'The stated values are minimum fees (lower limit), not upper limits.',
-    duration: 'Orientations: ~90 min for readings/talks, ~4 weeks for exhibitions, ~6 hours for rehearsals, full evening for performances.',
-    travelCosts: 'Additional travel costs according to state travel cost regulations.'
+    region: 'Nordrhein-Westfalen (NRW), Deutschland',
+    minimumFees: 'Bei den angegebenen Werten handelt es sich um Mindesthonorare (Untergrenze), keine Begrenzung nach oben.',
+    duration: 'Orientierungen: ca. 90 Min. für Lesungen/Vorträge, ca. 4 Wochen für Ausstellungen, ca. 6 Stunden für Proben, abendfüllend für Aufführungen.',
+    travelCosts: 'Zusätzliche Reisekosten nach Landesreisekostengesetz.'
   }
 };
 
