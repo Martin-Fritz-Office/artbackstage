@@ -8,11 +8,6 @@ $landingPage = [
   'subtitle' => 'Know your numbers. Protect your time. Work sustainably.',
   'home' => ['href' => 'index_en.php', 'label' => 'Section selection'],
   'language_switch' => ['href' => 'index_money.php', 'label' => 'Deutsch'],
-  'credibility_badge' => [
-    'text' => 'Built on Austrian tax law (2025), FAIR PAY 2026 & KU Linz research',
-    'sources_href' => 'sources_en.php',
-    'sources_label' => 'View sources',
-  ],
   'onboarding_block' => [
     'text' => 'New to artbackstage? Start with the Annual Forecast — 22 questions that reveal whether your current setup is financially viable.',
     'cta_label' => 'Start here →',
