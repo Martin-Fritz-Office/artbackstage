@@ -6,15 +6,6 @@ if (!isset($landingPage) || !is_array($landingPage)) {
 require_once __DIR__ . '/seo_meta.php';
 
 $e = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-
-// Load unified credibility badge config if not already set
-if (empty($landingPage['credibility_badge'])) {
-  $credibilityBadgeConfig = require __DIR__ . '/credibility_badge_config.php';
-  $lang = $landingPage['lang'] ?? 'de';
-  if (isset($credibilityBadgeConfig[$lang])) {
-    $landingPage['credibility_badge'] = $credibilityBadgeConfig[$lang];
-  }
-}
 ?><!doctype html>
 <html lang="<?= $e($landingPage['lang']) ?>">
 <head>
@@ -50,12 +41,6 @@ if (empty($landingPage['credibility_badge'])) {
           <a class="btn btn-hero-ghost" href="<?= $e($landingPage['home']['href']) ?>"><?= $e($landingPage['home']['label']) ?></a>
           <a class="btn btn-hero-ghost" href="<?= $e($landingPage['language_switch']['href']) ?>"><?= $e($landingPage['language_switch']['label']) ?></a>
         </div>
-        <?php if (!empty($landingPage['credibility_badge'])): ?>
-          <p class="credibility-badge">
-            <?= $e($landingPage['credibility_badge']['text']) ?>
-            <a href="<?= $e($landingPage['credibility_badge']['sources_href']) ?>"><?= $e($landingPage['credibility_badge']['sources_label']) ?></a>
-          </p>
-        <?php endif; ?>
       </div>
     </div>
 
