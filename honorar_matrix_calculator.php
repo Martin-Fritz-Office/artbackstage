@@ -255,8 +255,8 @@ $headerSubtitle = 'Berechnen Sie faire Künstlerhonorare basierend auf der NRW-H
     <main>
         <div class="calculator-container">
             <div class="calculator-section">
-                <h1>Honorarmatrix-Rechner</h1>
-                <p>Berechnen Sie faire Künstlerhonorare basierend auf der deutschen Honorarmatrix (Basishonorare mit Stufen, Stand: 23. Dezember 2025).</p>
+                <h1>Mindesthonorar-Rechner</h1>
+                <p>Berechnen Sie faire Künstlerhonorare basierend auf der NRW-Mindesthonorarrichtlinie (Basishonorare mit Stufen, Stand: 23. Dezember 2025).</p>
 
                 <form id="honorarForm" onsubmit="event.preventDefault(); calculateFee();">
                     <div class="form-group">
