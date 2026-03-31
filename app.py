@@ -534,11 +534,11 @@ def _get_expertise_prompt(expertise_level, question, context):
     format_instruction = """
 
 Formatiere deine Antwort exakt so:
-ZENTRALE AUSSAGE: [Ein einziger prägnanter Kernsatz, der die wichtigste Erkenntnis zusammenfasst]
+ZENTRALE AUSSAGEN: [Ein einziger prägnanter Kernsatz, der die wichtigste Erkenntnis zusammenfasst und ein darauf aufbauender Tipp]
 
 ANTWORT: [Deine ausführliche Antwort hier]"""
 
-    base_instruction = f"""Du bist ein hilfreicher Assistent für Prüfungsempfehlungen.
+    base_instruction = f"""Du bist ein hilfreicher Assistent für Empfehlungen von Rechnungshöfen.
 
 Benutzer-Frage: {question}
 
