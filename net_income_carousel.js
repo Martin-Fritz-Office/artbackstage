@@ -12,7 +12,7 @@
         `<h3>3) Danke</h3><p>Danke. Ich zeige dir jetzt, wie du dein Netto-Einkommen berechnen kannst.</p>`,
         `<h3>4) Umsatz</h3><p>Deine Gesamteinnahmen sind <strong>${EUR(s.revenue)}</strong>. Das ist dein Umsatz.</p>`,
         `<h3>5) Kosten abziehen</h3><p>Davon ziehst du deine Kosten von <strong>${EUR(s.costs)}</strong> ab.</p>`,
-        `<h3>6) Gewinn vor Sozialversicherung und Steuern</h3><p>Das Ergebnis ist dein Gewinn vor Sozialversicherung und Steuern: <strong>${EUR(s.pbs)}</strong>.</p>`,
+        `<h3>6) Gewinn vor Sozialversicherung und Steuern</h3><p>Das Ergebnis ist dein Gewinn vor Sozialversicherung und Steuern (ohne Gewinnfreibetrag): <strong>${EUR(s.pbs)}</strong>.</p>`,
         `<h3>7) Abzüge für Sozialversicherung</h3><ul><li>Krankenversicherung: 6,8% = <strong>${EUR(s.social.health)}</strong></li><li>Pensionsversicherung: 18,5% = <strong>${EUR(s.social.pension)}</strong></li><li>Selbständigenvorsorge: 1,53% = <strong>${EUR(s.social.retirement)}</strong></li><li>Unfallversicherung: 12,95 Euro pro Monat = <strong>${EUR(s.social.accident)}</strong></li></ul>`,
         `<h3>8) Gesamte Sozialabgaben</h3><p>Das sind insgesamt: <strong>${EUR(s.social.total)}</strong>.</p>`,
         `<h3>9) Gewinn vor Steuern</h3><p>Dein Gewinn vor Steuern ist also: <strong>${EUR(s.pbt)}</strong>.</p>`,
