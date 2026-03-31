@@ -14,7 +14,7 @@
     <header class="header">
       <div>
         <h1>Jahresnettoeinkommen Schritt für Schritt</h1>
-        <p class="muted">Interaktive Lernserie zur Berechnung deines Jahresnettoeinkommens als Selbständige*r.</p>
+        <p class="muted">Tool zur Abschätzung deines Jahresnettoeinkommens als Selbständige*r.</p>
       </div>
       <div class="header-actions">
         <a class="btn btn-outline" href="index.php">Zur Startseite</a>
