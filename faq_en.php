@@ -27,8 +27,8 @@ if (is_file($configPath)) {
             $faqTotal  = (int) $countStmt->fetchColumn();
             if ($faqTotal > 0) {
                 $offset  = random_int(0, $faqTotal - 1);
-                $stmt    = $pdo->prepare('SELECT id, category, question, answer, votes_positive, votes_negative FROM faq LIMIT 1 OFFSET :offset');
-                $stmt->execute([':offset' => $offset]);
+                $stmt    = $pdo->prepare('SELECT id, category, question, answer, votes_positive, votes_negative FROM faq LIMIT 1 OFFSET ?');
+                $stmt->execute([$offset]);
                 $faqEntry = $stmt->fetch();
             }
         } catch (Exception $e) {
