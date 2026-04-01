@@ -50,6 +50,7 @@ body{
   color:var(--text);
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 
 /* ── Page wrapper ── */
@@ -1105,6 +1106,7 @@ h3.warn{color:var(--warning)}
   border:1px solid var(--border);border-radius:10px;
   box-shadow:0 6px 28px rgba(0,0,0,.15);padding:14px 16px;
   font-size:13px;line-height:1.65;font-family:system-ui,sans-serif;
+  max-width:min(380px, calc(100vw - 16px));
 }
 .clause-tip__close{position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;font-size:18px;line-height:1;color:var(--muted);padding:2px 5px;border-radius:4px}
 .clause-tip__close:hover{background:var(--surface-soft);color:var(--headline)}
@@ -1429,14 +1431,37 @@ h3.warn{color:var(--warning)}
     background:var(--surface);
     border-top:1px solid var(--border);
     border-bottom:none;
-    padding:8px 14px;
-    padding-bottom:calc(8px + env(safe-area-inset-bottom));
+    padding:6px 8px;
+    padding-bottom:calc(6px + env(safe-area-inset-bottom));
     margin:0;
     z-index:200;
     box-shadow:0 -2px 8px rgba(28,24,18,0.10);
+    flex-wrap:nowrap;
+    gap:4px;
+    justify-content:space-around;
+  }
+  .hub-nav-label{
+    display:none;
+  }
+  .hub-nav-link{
+    flex:1;
+    text-align:center;
+    padding:10px 4px;
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    border-radius:var(--radius-sm);
+    border-color:transparent;
+    background:transparent;
+  }
+  .hub-nav-link.hub-nav-active{
+    background:var(--accent-light);
+    border-color:var(--accent);
   }
   .site-footer{
-    padding-bottom:64px;
+    padding-bottom:calc(64px + env(safe-area-inset-bottom));
   }
 }
 
@@ -2180,4 +2205,123 @@ button:disabled {
     .theme-card h3 {
         font-size: 16px;
     }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE USABILITY ENHANCEMENTS
+═══════════════════════════════════════════ */
+
+/* ── Prevent iOS Safari auto-zoom on input focus (requires font-size ≥ 16px) ── */
+@media (max-width:760px){
+  select,
+  input[type="number"],
+  input[type="text"],
+  input[type="date"],
+  textarea{
+    font-size:16px;
+  }
+  .input-inline{
+    font-size:16px;
+  }
+}
+
+/* ── Minimum 44px touch targets for buttons ── */
+@media (max-width:760px){
+  .btn{
+    min-height:44px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .header-actions .btn{
+    padding:10px 16px;
+  }
+}
+
+/* ── Ensure page content clears the fixed bottom nav ── */
+@media (max-width:760px){
+  .page{
+    padding-bottom:calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Make radio/checkbox touch targets easier to tap ── */
+@media (max-width:760px){
+  .radio-option{
+    padding:12px 16px;
+    min-height:44px;
+  }
+  .agreement-option{
+    padding:6px 0;
+    min-height:44px;
+    align-items:center;
+  }
+}
+
+/* ── Clause tooltip: pin to bottom edge on mobile, above the fixed nav ── */
+@media (max-width:640px){
+  .clause-tip{
+    position:fixed !important;
+    left:8px !important;
+    right:8px !important;
+    bottom:calc(72px + env(safe-area-inset-bottom)) !important;
+    top:auto !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+}
+
+/* ── Comparison table: allow horizontal scroll with hint ── */
+@media (max-width:760px){
+  .comparison-table-wrap{
+    -webkit-overflow-scrolling:touch;
+  }
+  .comparison-controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .comparison-controls select[multiple]{
+    min-height:100px;
+  }
+}
+
+/* ── Hero: tighter on small phones ── */
+@media (max-width:380px){
+  .landing-hero{
+    padding:28px 16px 24px;
+  }
+  .landing-hero h1{
+    font-size:1.55rem;
+  }
+  .landing-hero-actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .landing-hero-actions .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+/* ── Reduce decorative animations on slower/older mobile devices ── */
+@media (max-width:760px) and (prefers-reduced-data: reduce){
+  .hero-sat-svg,
+  .hero-picto{
+    display:none;
+  }
+}
+
+/* ── Landscape phones: shrink the fixed nav so it takes less vertical space ── */
+@media (max-height:500px) and (max-width:900px){
+  .hub-nav{
+    padding-top:4px;
+    padding-bottom:calc(4px + env(safe-area-inset-bottom));
+  }
+  .hub-nav-link{
+    min-height:36px;
+    padding:6px 4px;
+  }
+  .site-footer{
+    padding-bottom:calc(52px + env(safe-area-inset-bottom));
+  }
 }
