@@ -428,7 +428,7 @@ def ask():
                 try:
                     search_result = supabase_rpc_with_timeout(
                         rpc_function,
-                        {"query_embedding": question_embedding, "match_count": 3},
+                        {"query_embedding": question_embedding, "match_count": 5},
                         timeout_seconds=15
                     )
                     # Cache the search results
@@ -809,7 +809,7 @@ Antworte NUR mit dem JSON Array, ohne zusätzliche Erklärungen."""
         return _extract_themes_fallback(recommendations)
 
 
-def _rerank_themes_for_query(themes, query, top_n=8):
+def _rerank_themes_for_query(themes, query, top_n=5):
     """Re-rank cached themes by relevance to a search query using Claude"""
     if not themes or not query:
         return themes[:top_n]
