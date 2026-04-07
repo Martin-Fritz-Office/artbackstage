@@ -15,7 +15,7 @@
       <div>
         <h1>BKF Honorarrechner</h1>
         <p class="muted">Berechne dein Künstlerhonorar basierend auf den Empfehlungen des Billedkunstnernes Forbund (BKF) Dänemark.</p>
-        <p class="small muted">Basiert auf den <a href="https://www.billedkunstnernes-forbund.dk/" target="_blank" rel="noopener noreferrer">BKF-Prislisten</a>. Die Preise sind Richtwerte in EUR (exkl. Mehrwertsteuer).</p>
+        <p class="small muted">Basiert auf den <a href="https://bkf.dk/en/raad-og-jura/vejledende-priser-2/" target="_blank" rel="noopener noreferrer">BKF-Prislisten</a>. Die Preise sind Richtwerte in EUR (exkl. Mehrwertsteuer).</p>
       </div>
       <div class="header-actions">
         <div class="language-toggle">

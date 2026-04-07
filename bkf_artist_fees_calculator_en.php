@@ -15,7 +15,7 @@
       <div>
         <h1>BKF Fee Calculator</h1>
         <p class="muted">Calculate your artist honorarium based on the recommendations of Billedkunstnernes Forbund (BKF) Denmark.</p>
-        <p class="small muted">Based on <a href="https://www.billedkunstnernes-forbund.dk/" target="_blank" rel="noopener noreferrer">BKF fee guidelines</a>. Prices are indicative values in EUR (excl. VAT).</p>
+        <p class="small muted">Based on <a href="https://bkf.dk/en/raad-og-jura/vejledende-priser-2/" target="_blank" rel="noopener noreferrer">BKF fee guidelines</a>. Prices are indicative values in EUR (excl. VAT).</p>
       </div>
       <div class="header-actions">
         <div class="language-toggle">
