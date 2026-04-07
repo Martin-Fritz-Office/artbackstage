@@ -60,6 +60,7 @@ $landingPage = [
       'description' => 'Paying fairly is not just ethical — it is how the sector stays liveable. Use data-backed benchmarks to build a budget you can defend.',
       'icon' => '<circle cx="12" cy="12" r="7.8"></circle><path d="M12 7.8v8.4"></path><path d="M8.7 10.2c0-1.1 1.3-2 3.3-2s3.3.9 3.3 2-1.3 2-3.3 2-3.3.9-3.3 2 1.3 2 3.3 2 3.3-.9 3.3-2"></path>',
       'tools' => [
+        ['href' => 'bkf_artist_fees_calculator_en.php', 'label' => 'BKF Fee Calculator (Denmark)'],
         ['href' => 'honorarium_questionnaire_en.php', 'label' => 'Honorarium Questionnaire'],
         ['href' => 'honorar_matrix_calculator_en.php', 'label' => 'Honor Matrix Calculator'],
         ['href' => 'personalplanung_en.php', 'label' => 'Staff planning tool (FAIR PAY 2026)'],
@@ -67,7 +68,7 @@ $landingPage = [
     ],
   ],
   'section_title' => 'All calculators',
-  'tools_toggle_label' => 'Browse all 13 tools',
+  'tools_toggle_label' => 'Browse all 14 tools',
   'footer' => 'The artbackstage tool collection is in ongoing BETA development as part of the teaching assignment "Art in Context (Law, Money and Fairness)" at Kunstuniversität Linz. No personalized data is stored. Teilweise KI generiert. Keine Haftung.',
   'tools' => [
     ['href' => 'forecast_en.php', 'title' => 'Annual Revenue & Profit Forecast', 'description' => 'Full forecast with questionnaire, result sheet, and charts.', 'icon' => '<path d="M4 19.5h16"></path><path d="M6 16l3.2-3.2 2.7 2.6 5-5"></path><circle cx="17" cy="8" r="1.2"></circle>'],
@@ -78,6 +79,7 @@ $landingPage = [
     ['href' => 'curator_viability_carousel_en.php', 'title' => 'Curator Freelance Project Viability', 'description' => '13 questions to decide: go, renegotiate, or decline.', 'icon' => '<path d="M9.2 12.2l1.8 1.8 3.8-4"></path><circle cx="12" cy="12" r="8"></circle>'],
     ['href' => 'honorarium_questionnaire_en.php', 'title' => 'Honorarium Questionnaire', 'description' => 'Guided questionnaire in English for estimating fair artist honoraria.', 'icon' => '<circle cx="12" cy="12" r="8"></circle><path d="M9.3 9.7a2.7 2.7 0 1 1 5.1 1.4c-.6.9-1.5 1.3-1.9 2.3"></path><circle cx="12" cy="16.9" r=".8"></circle>'],
     ['href' => 'honorar_matrix_calculator_en.php', 'title' => 'Honor Matrix Calculator', 'description' => 'Interactive calculator for artist fees based on honor matrix levels.', 'icon' => '<rect x="5" y="5" width="14" height="14" rx="1"></rect><path d="M5 10h14"></path><path d="M5 15h14"></path><path d="M10 5v14"></path><path d="M15 5v14"></path>'],
+    ['href' => 'bkf_artist_fees_calculator_en.php', 'title' => 'BKF Fee Calculator', 'description' => 'Calculate artist honorariums based on Danish BKF recommendations in EUR.', 'icon' => '<circle cx="12" cy="12" r="7.5"></circle><path d="M12 7.5v9"></path><path d="M9 10c0-1.6 1.3-2.5 3-2.5s3 .9 3 2.5-1.3 2.5-3 2.5-3 .9-3 2.5 1.3 2.5 3 2.5 3-.9 3-2.5"></path>'],
     ['href' => 'gallery_contract_reality_check_en.php', 'title' => 'Gallery Contract Reality Check', 'description' => '12 questions to stress-test gallery deal terms.', 'icon' => '<path d="M8 4.5h6l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 7 19V6a1.5 1.5 0 0 1 1-1.4"></path><path d="M14 4.5V9h4"></path><path d="M9.5 13h5"></path><path d="M9.5 16h5"></path>'],
     ['href' => 'salary_data_en.php', 'title' => 'Salary & Fee Data Explorer', 'description' => 'Search 100 art/museum roles and compare salary, day-rate, and project-fee ranges with source links.', 'icon' => '<path d="M5 18h14"></path><path d="M7.5 15V9"></path><path d="M12 15V6"></path><path d="M16.5 15v-3"></path>'],
     ['href' => 'personalplanung_en.php', 'title' => 'Staff planning tool (FAIR PAY 2026)', 'description' => 'View scale groups/examples and calculate actual salaries by custom hours.', 'icon' => '<path d="M4.5 19.5h15"></path><path d="M6 7.5h12"></path><path d="M8.5 12h2"></path><path d="M13.5 12h2"></path><path d="M8.5 15.5h7"></path>'],
