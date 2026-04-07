@@ -35,7 +35,7 @@ if (!function_exists('render_site_footer')) {
         $lawHref   = 'index_law.php';
         $socialHref = $isEnglishPage ? 'index_soziales_en.php' : 'index_soziales.php';
         $organisationHref = $isEnglishPage ? 'index_organisation_en.php' : 'index_organisation.php';
-        $isMoneyPage  = str_contains($scriptName, 'money') || str_contains($scriptName, 'forecast') || str_contains($scriptName, 'hourly') || str_contains($scriptName, 'freelance') || str_contains($scriptName, 'turnover') || str_contains($scriptName, 'personalplanung') || str_contains($scriptName, 'gallery_contract') || str_contains($scriptName, 'agreement') || str_contains($scriptName, 'honorarium');
+        $isMoneyPage  = str_contains($scriptName, 'money') || str_contains($scriptName, 'forecast') || str_contains($scriptName, 'hourly') || str_contains($scriptName, 'freelance') || str_contains($scriptName, 'turnover') || str_contains($scriptName, 'personalplanung') || str_contains($scriptName, 'gallery_contract') || str_contains($scriptName, 'agreement') || str_contains($scriptName, 'honorarium') || str_contains($scriptName, 'bkf');
         $isLawPage    = str_contains($scriptName, 'law') || str_contains($scriptName, 'vgg') || str_contains($scriptName, 'bildrecht') || str_contains($scriptName, 'fair_use');
         $isSocialPage = str_contains($scriptName, 'soziales') || str_contains($scriptName, 'onace') || str_contains($scriptName, 'gender') || str_contains($scriptName, 'svs_leistungen');
         $isOrganisationPage = str_contains($scriptName, 'organisation') || str_contains($scriptName, 'vereinstipps') || str_contains($scriptName, 'werkschutz');
