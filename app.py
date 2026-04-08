@@ -183,8 +183,10 @@ class RateLimiter:
         self.requests[identifier].append(now)
         return True
 
-# Rate limiter: max 10 requests per IP per 60 seconds for /ask endpoint
-ask_limiter = RateLimiter(max_requests=10, window_seconds=60)
+# Rate limiters with stricter limits for expensive operations
+ask_limiter = RateLimiter(max_requests=10, window_seconds=60)  # /ask: 10 per minute (streaming, less resource-heavy)
+themes_limiter = RateLimiter(max_requests=5, window_seconds=60)  # /themes: 5 per minute (calls Claude)
+theme_questions_limiter = RateLimiter(max_requests=3, window_seconds=60)  # /theme-questions: 3 per minute (expensive Claude call)
 
 # Embedding cache with TTL (10 minutes)
 class EmbeddingCache:
@@ -265,6 +267,7 @@ class ThemeCache:
 
 theme_cache = ThemeCache(ttl_seconds=86400)
 related_theme_cache = ThemeCache(ttl_seconds=3600)  # 1h TTL for query-specific themes
+theme_questions_cache = ThemeCache(ttl_seconds=86400)  # 24h TTL for theme questions - expensive operation
 
 # Initialize API clients with lazy initialization for Supabase
 try:
@@ -814,6 +817,13 @@ def _rerank_themes_for_query(themes, query, top_n=5):
     if not themes or not query:
         return themes[:top_n]
 
+    # Check cache first - this is called for every /themes query request
+    cache_key = f"rerank_{hashlib.md5(f'{query}_{top_n}'.encode()).hexdigest()}"
+    cached_result = related_theme_cache.get(cache_key)
+    if cached_result is not None:
+        print(f"Using cached reranked themes for query: {query}")
+        return cached_result
+
     themes_text = "\n".join([
         f"{i+1}. {t['theme']}: {t['description']}"
         for i, t in enumerate(themes)
@@ -867,10 +877,16 @@ Genau {top_n} Nummern, sortiert nach Relevanz (relevantestes zuerst)."""
             if i not in seen:
                 result.append(t)
 
-        return result[:top_n]
+        final_result = result[:top_n]
+        # Cache the reranked result
+        related_theme_cache.set(cache_key, final_result)
+        return final_result
     except Exception as e:
         print(f"Error reranking themes: {e}")
-        return themes[:top_n]
+        fallback = themes[:top_n]
+        # Cache fallback result too
+        related_theme_cache.set(cache_key, fallback)
+        return fallback
 
 
 def _generate_theme_questions_fallback(theme_name, theme_description):
@@ -895,6 +911,13 @@ def _generate_theme_questions_fallback(theme_name, theme_description):
 
 def _generate_theme_questions(theme_name, theme_description):
     """Generate preconfigured questions and checklist items for a theme"""
+    # Check cache first - this is an expensive operation
+    cache_key = f"theme_questions_{hashlib.md5(f'{theme_name}_{theme_description}'.encode()).hexdigest()}"
+    cached_result = theme_questions_cache.get(cache_key)
+    if cached_result is not None:
+        print(f"Using cached theme questions for: {theme_name}")
+        return cached_result
+
     try:
         response = anthropic_client.messages.create(
             model="claude-sonnet-4-6",
@@ -942,12 +965,18 @@ Antworte NUR mit dem JSON Objekt, ohne zusätzliche Erklärungen."""
             response_text = response_text.strip()
 
         result = _parse_json_response(response_text)
-        return result if isinstance(result, dict) else _generate_theme_questions_fallback(theme_name, theme_description)
+        final_result = result if isinstance(result, dict) else _generate_theme_questions_fallback(theme_name, theme_description)
+        # Cache the result before returning
+        theme_questions_cache.set(cache_key, final_result)
+        return final_result
     except Exception as e:
         logger.error(f"Error generating theme questions: {str(e)}", exc_info=True)
         print(f"Error generating theme questions: {e}")
         # Fall back to generic questions
-        return _generate_theme_questions_fallback(theme_name, theme_description)
+        fallback_result = _generate_theme_questions_fallback(theme_name, theme_description)
+        # Cache the fallback result too
+        theme_questions_cache.set(cache_key, fallback_result)
+        return fallback_result
 
 
 @app.route("/themes", methods=["GET"])
@@ -970,6 +999,19 @@ def themes():
                 "timestamp": datetime.utcnow().isoformat() + "Z"
             }
         }), 503
+
+    # Rate limiting for expensive endpoint
+    client_ip = request.remote_addr
+    if not themes_limiter.is_allowed(client_ip):
+        logger.warning(f"Rate limit exceeded for /themes endpoint, IP: {client_ip}", extra={"request_id": request_id})
+        return jsonify({
+            "error": {
+                "message": "Too many theme requests. Please try again later.",
+                "code": 429,
+                "request_id": request_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 429
 
     try:
         source = request.args.get("source", "strh").lower()
@@ -1077,6 +1119,19 @@ def theme_questions():
             }
         }), 503
 
+    # Rate limiting for expensive endpoint
+    client_ip = request.remote_addr
+    if not theme_questions_limiter.is_allowed(client_ip):
+        logger.warning(f"Rate limit exceeded for /theme-questions endpoint, IP: {client_ip}", extra={"request_id": request_id})
+        return jsonify({
+            "error": {
+                "message": "Too many theme question requests. Please try again later.",
+                "code": 429,
+                "request_id": request_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 429
+
     try:
         data = request.json
         if not data or "theme_name" not in data:
@@ -1097,6 +1152,27 @@ def theme_questions():
             return jsonify({
                 "error": {
                     "message": "Theme name cannot be empty",
+                    "code": 400,
+                    "request_id": request_id,
+                    "timestamp": datetime.utcnow().isoformat() + "Z"
+                }
+            }), 400
+
+        # Validate input lengths to prevent abuse
+        if len(theme_name) > 500:
+            return jsonify({
+                "error": {
+                    "message": "Theme name too long (maximum 500 characters)",
+                    "code": 400,
+                    "request_id": request_id,
+                    "timestamp": datetime.utcnow().isoformat() + "Z"
+                }
+            }), 400
+
+        if len(theme_description) > 2000:
+            return jsonify({
+                "error": {
+                    "message": "Theme description too long (maximum 2000 characters)",
                     "code": 400,
                     "request_id": request_id,
                     "timestamp": datetime.utcnow().isoformat() + "Z"
