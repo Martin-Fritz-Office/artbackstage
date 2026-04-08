@@ -320,6 +320,62 @@ def supabase_rpc_with_timeout(rpc_function, params, timeout_seconds=15):
     return result_container[0]
 
 
+def anthropic_call_with_retry(api_call, max_retries=4, initial_backoff=2):
+    """
+    Wrapper for Anthropic API calls with exponential backoff retry logic.
+    Handles 429 (rate limit) and 529 (overloaded) errors.
+
+    Args:
+        api_call: Callable that makes the API request (e.g., lambda: client.messages.create(...))
+        max_retries: Maximum number of retry attempts (default 4 = 2s, 4s, 8s, 16s)
+        initial_backoff: Initial backoff in seconds (default 2)
+
+    Returns:
+        API response
+
+    Raises:
+        Exception: If all retries fail
+    """
+    last_exception = None
+
+    for attempt in range(max_retries):
+        try:
+            return api_call()
+        except Exception as e:
+            error_code = None
+            error_str = str(e).lower()
+
+            # Check for retryable errors
+            if hasattr(e, 'status_code'):
+                error_code = e.status_code
+            elif "429" in error_str or "rate_limit" in error_str:
+                error_code = 429
+            elif "529" in error_str or "overloaded" in error_str:
+                error_code = 529
+            elif "500" in error_str or "503" in error_str:
+                error_code = 500
+
+            last_exception = e
+
+            # Only retry on rate limit and overload errors
+            if error_code in [429, 529, 500, 503]:
+                if attempt < max_retries - 1:
+                    backoff = initial_backoff * (2 ** attempt)
+                    logger.warning(
+                        f"API error {error_code}, retrying in {backoff}s (attempt {attempt + 1}/{max_retries})",
+                        exc_info=False
+                    )
+                    time.sleep(backoff)
+                    continue
+
+            # Non-retryable error or out of retries
+            raise
+
+    # All retries exhausted
+    logger.error(f"API call failed after {max_retries} retries", exc_info=True)
+    raise last_exception
+
+
 @app.route("/ask", methods=["POST"])
 def ask():
     """
@@ -488,16 +544,19 @@ def ask():
 
             expertise_prompt = _get_expertise_prompt(expertise_level, question, context)
 
-            # Step 5: Stream Claude response
+            # Step 5: Stream Claude response with retry logic
             buffer = ""
             answer_started = False
 
-            with anthropic_client.messages.stream(
-                model=model_id,
-                max_tokens=1000,
-                messages=[{"role": "user", "content": expertise_prompt}],
-                timeout=90.0
-            ) as stream:
+            def stream_api_call():
+                return anthropic_client.messages.stream(
+                    model=model_id,
+                    max_tokens=1000,
+                    messages=[{"role": "user", "content": expertise_prompt}],
+                    timeout=90.0
+                )
+
+            with anthropic_call_with_retry(stream_api_call) as stream:
                 for text in stream.text_stream:
                     if not answer_started:
                         buffer += text
@@ -759,13 +818,14 @@ def _extract_themes(recommendations):
     ])
 
     try:
-        response = anthropic_client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=2000,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"""Analysiere die folgenden {len(sample)} Empfehlungen und extrahiere die TOP 50 THEMEN/KATEGORIEN, die am häufigsten vorkommen.
+        def extract_themes_api_call():
+            return anthropic_client.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=2000,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"""Analysiere die folgenden {len(sample)} Empfehlungen und extrahiere die TOP 50 THEMEN/KATEGORIEN, die am häufigsten vorkommen.
 
 Empfehlungen:
 {recommendation_text}
@@ -781,11 +841,12 @@ Antworte mit einem JSON Array mit max. 50 Objekten im Format:
 ]
 
 Antworte NUR mit dem JSON Array, ohne zusätzliche Erklärungen."""
-                }
-            ],
-            timeout=90.0
-        )
+                    }
+                ],
+                timeout=90.0
+            )
 
+        response = anthropic_call_with_retry(extract_themes_api_call)
         response_text = response.content[0].text.strip()
         if not response_text:
             print("Error: Claude returned empty response")
@@ -830,13 +891,14 @@ def _rerank_themes_for_query(themes, query, top_n=5):
     ])
 
     try:
-        response = anthropic_client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=400,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"""Du bekommst eine Suchanfrage und eine Liste von Themen aus Prüfungsempfehlungen.
+        def rerank_api_call():
+            return anthropic_client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=400,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"""Du bekommst eine Suchanfrage und eine Liste von Themen aus Prüfungsempfehlungen.
 Wähle die {top_n} Themen aus, die am relevantesten für die Suchanfrage sind.
 
 Suchanfrage: "{query}"
@@ -846,11 +908,12 @@ Themen:
 
 Antworte NUR mit einem JSON Array der Nummern der relevantesten Themen, z.B.: [3, 7, 1, 12, 5, 8, 2, 9]
 Genau {top_n} Nummern, sortiert nach Relevanz (relevantestes zuerst)."""
-                }
-            ],
-            timeout=20.0
-        )
+                    }
+                ],
+                timeout=20.0
+            )
 
+        response = anthropic_call_with_retry(rerank_api_call)
         response_text = response.content[0].text.strip()
         if response_text.startswith("```"):
             response_text = response_text.split("```")[1]
@@ -919,13 +982,14 @@ def _generate_theme_questions(theme_name, theme_description):
         return cached_result
 
     try:
-        response = anthropic_client.messages.create(
-            model="claude-sonnet-4-6",
-            max_tokens=1500,
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"""Generiere für das folgende Thema aus Prüfungsempfehlungen:
+        def generate_questions_api_call():
+            return anthropic_client.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=1500,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"""Generiere für das folgende Thema aus Prüfungsempfehlungen:
 
 Thema: {theme_name}
 Beschreibung: {theme_description}
@@ -949,11 +1013,12 @@ Antworte mit einem JSON Objekt im Format:
 }}
 
 Antworte NUR mit dem JSON Objekt, ohne zusätzliche Erklärungen."""
-                }
-            ],
-            timeout=90.0
-        )
+                    }
+                ],
+                timeout=90.0
+            )
 
+        response = anthropic_call_with_retry(generate_questions_api_call)
         response_text = response.content[0].text.strip()
 
         # Extract JSON from response (handle markdown code blocks)
