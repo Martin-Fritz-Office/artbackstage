@@ -49,18 +49,39 @@ require_once __DIR__ . '/seo_meta.php';
           </div>
 
           <div class="form-group">
-            <label for="paymentAmount">Payment (gross in EUR)</label>
-            <input
-              id="paymentAmount"
-              type="number"
-              class="input-block"
-              placeholder="e.g. 2500"
-              aria-label="Payment in EUR"
-              min="0"
-              step="0.01"
-              required
-            />
-            <small class="muted">Required: Your payment for this job</small>
+            <label for="paymentAmount">Payment (gross)</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input
+                id="paymentAmount"
+                type="number"
+                class="input-block"
+                placeholder="e.g. 2500"
+                aria-label="Payment"
+                min="0"
+                step="0.01"
+                required
+                style="flex: 1;"
+              />
+              <select
+                id="currency"
+                class="input-inline"
+                aria-label="Currency"
+                required
+              >
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="CHF">CHF</option>
+                <option value="JPY">JPY</option>
+                <option value="CAD">CAD</option>
+                <option value="AUD">AUD</option>
+                <option value="SEK">SEK</option>
+                <option value="NOK">NOK</option>
+                <option value="DKK">DKK</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <small class="muted">Required: Your payment and currency</small>
           </div>
 
           <div class="form-group">

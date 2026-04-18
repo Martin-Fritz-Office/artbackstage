@@ -9,7 +9,9 @@ header('Referrer-Policy: no-referrer');
 
 const MAX_PAYLOAD_BYTES = 50000;
 const MAX_DESCRIPTION_LENGTH = 255;
+const MAX_CURRENCY_LENGTH = 10;
 const MAX_COMMENT_LENGTH = 1000;
+const ALLOWED_CURRENCIES = ['EUR', 'USD', 'GBP', 'CHF', 'JPY', 'CAD', 'AUD', 'SEK', 'NOK', 'DKK', 'Other'];
 
 /**
  * @param array<string, mixed> $extra
@@ -81,6 +83,15 @@ if ($paymentAmount < 0) {
     fail(400, 'invalid_payment_amount', 'Payment amount must be >= 0');
 }
 
+$currency = strtoupper(trim((string) ($data['currency'] ?? '')));
+if (mb_strlen($currency) > MAX_CURRENCY_LENGTH) {
+    fail(400, 'currency_too_long', 'Currency code exceeds maximum length');
+}
+
+if (!in_array($currency, ALLOWED_CURRENCIES, true)) {
+    fail(400, 'invalid_currency', 'Currency not in allowed list');
+}
+
 $comment = trim((string) ($data['comment'] ?? ''));
 if (mb_strlen($comment) > MAX_COMMENT_LENGTH) {
     fail(400, 'comment_too_long', 'Comment exceeds maximum length');
@@ -101,14 +112,15 @@ try {
     ]);
 
     $stmt = $pdo->prepare(
-        'INSERT INTO payment_survey_submissions (locale, job_description, payment_amount, comment)
-         VALUES (:locale, :job_description, :payment_amount, :comment)'
+        'INSERT INTO payment_survey_submissions (locale, job_description, payment_amount, currency, comment)
+         VALUES (:locale, :job_description, :payment_amount, :currency, :comment)'
     );
 
     $stmt->execute([
         ':locale' => $locale,
         ':job_description' => $jobDescription,
         ':payment_amount' => $paymentAmount,
+        ':currency' => $currency,
         ':comment' => $comment,
     ]);
 
