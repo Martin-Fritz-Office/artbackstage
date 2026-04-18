@@ -7,6 +7,7 @@
   const successMessage = document.getElementById("successMessage");
   const jobDescription = document.getElementById("jobDescription");
   const paymentAmount = document.getElementById("paymentAmount");
+  const currency = document.getElementById("currency");
   const comment = document.getElementById("comment");
 
   async function submitForm(event) {
@@ -35,6 +36,7 @@
         body: JSON.stringify({
           jobDescription: jobDescription.value.trim(),
           paymentAmount: amount,
+          currency: currency.value.trim(),
           comment: comment.value.trim(),
           locale: document.body.dataset.lang || "de",
         }),

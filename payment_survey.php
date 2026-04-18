@@ -49,18 +49,39 @@ require_once __DIR__ . '/seo_meta.php';
           </div>
 
           <div class="form-group">
-            <label for="paymentAmount">Honorar (brutto in EUR)</label>
-            <input
-              id="paymentAmount"
-              type="number"
-              class="input-block"
-              placeholder="z.B. 2500"
-              aria-label="Honorar in EUR"
-              min="0"
-              step="0.01"
-              required
-            />
-            <small class="muted">Erforderlich: Dein Honorar für diesen Job</small>
+            <label for="paymentAmount">Honorar (brutto)</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input
+                id="paymentAmount"
+                type="number"
+                class="input-block"
+                placeholder="z.B. 2500"
+                aria-label="Honorar"
+                min="0"
+                step="0.01"
+                required
+                style="flex: 1;"
+              />
+              <select
+                id="currency"
+                class="input-inline"
+                aria-label="Währung"
+                required
+              >
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="CHF">CHF</option>
+                <option value="JPY">JPY</option>
+                <option value="CAD">CAD</option>
+                <option value="AUD">AUD</option>
+                <option value="SEK">SEK</option>
+                <option value="NOK">NOK</option>
+                <option value="DKK">DKK</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <small class="muted">Erforderlich: Dein Honorar und die Währung</small>
           </div>
 
           <div class="form-group">
