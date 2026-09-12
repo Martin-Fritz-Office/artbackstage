@@ -820,7 +820,7 @@ def _extract_themes(recommendations):
     try:
         def extract_themes_api_call():
             return anthropic_client.messages.create(
-                model="claude-sonnet-4-6",
+                model="claude-haiku-4-5-20251001",
                 max_tokens=2000,
                 messages=[
                     {
@@ -984,7 +984,7 @@ def _generate_theme_questions(theme_name, theme_description):
     try:
         def generate_questions_api_call():
             return anthropic_client.messages.create(
-                model="claude-sonnet-4-6",
+                model="claude-haiku-4-5-20251001",
                 max_tokens=1500,
                 messages=[
                     {
