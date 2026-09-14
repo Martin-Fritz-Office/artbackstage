@@ -690,13 +690,21 @@ def _fetch_all_recommendations(source="strh", limit=500):
         return []
 
 
-def _parse_json_response(response_text):
+def _parse_json_response(response_text, max_repair_attempts=2):
     """Parse JSON response with error recovery for malformed JSON"""
+    if not response_text or not response_text.strip():
+        logger.warning("Empty response text")
+        return None
+
     try:
         return json.loads(response_text)
     except json.JSONDecodeError as e:
-        print(f"Initial JSON parse failed: {e}")
-        print(f"Attempting to repair JSON...")
+        logger.warning(f"Initial JSON parse failed: {e}")
+
+        # Limit repair attempts to prevent wasted tokens
+        if max_repair_attempts <= 0:
+            logger.error(f"JSON parsing failed and no repair attempts left")
+            return None
 
         # Try multiple repair strategies
         repair_attempts = []
@@ -770,23 +778,27 @@ def _parse_json_response(response_text):
                 if objects:
                     repair_attempts.append((f"complete object extraction ({len(objects)} objects found)", objects))
         except Exception as e:
-            print(f"Object extraction attempt failed: {e}")
+            logger.debug(f"Object extraction attempt failed: {e}")
 
         # Try each repair strategy
         for strategy_name, repaired_item in repair_attempts:
             try:
                 if isinstance(repaired_item, list):
-                    # Already parsed as objects
+                    logger.info(f"JSON repair succeeded using strategy: {strategy_name}")
                     return repaired_item
                 result = json.loads(repaired_item)
-                print(f"JSON repair succeeded using strategy: {strategy_name}")
+                logger.info(f"JSON repair succeeded using strategy: {strategy_name}")
                 return result
             except json.JSONDecodeError as repair_error:
-                print(f"Strategy '{strategy_name}' failed: {repair_error}")
+                logger.debug(f"Strategy '{strategy_name}' failed: {repair_error}")
                 continue
             except Exception as repair_error:
-                print(f"Strategy '{strategy_name}' failed with exception: {repair_error}")
+                logger.debug(f"Strategy '{strategy_name}' failed with exception: {repair_error}")
                 continue
+
+        # All repair attempts failed
+        logger.error(f"All JSON repair strategies failed. Response preview: {response_text[:200]}")
+        return None
 
         # All repairs failed
         print(f"JSON repair failed completely. Response text (first 500 chars): {response_text[:500]}")
@@ -821,55 +833,56 @@ def _extract_themes(recommendations):
         def extract_themes_api_call():
             return anthropic_client.messages.create(
                 model="claude-haiku-4-5-20251001",
-                max_tokens=2000,
+                max_tokens=1500,
                 messages=[
                     {
                         "role": "user",
-                        "content": f"""Analysiere die folgenden {len(sample)} Empfehlungen und extrahiere die TOP 50 THEMEN/KATEGORIEN, die am häufigsten vorkommen.
+                        "content": f"""Analysiere die folgenden {len(sample)} Empfehlungen und extrahiere die TOP 30 THEMEN/KATEGORIEN.
 
 Empfehlungen:
 {recommendation_text}
 
-Antworte mit einem JSON Array mit max. 50 Objekten im Format:
-[
-  {{
-    "id": 1,
-    "theme": "Themaname (auf Deutsch)",
-    "description": "Kurze Beschreibung des Themas",
-    "frequency": "Häufigkeit (häufig/sehr häufig/regelmäßig)"
-  }}
-]
+Antworte mit EXAKT diesem JSON-Format (keine Code-Blöcke, nur das Array):
+[{{"id": 1, "theme": "Themename", "description": "Kurzbeschreibung", "frequency": "häufig"}}]
 
-Antworte NUR mit dem JSON Array, ohne zusätzliche Erklärungen."""
+Regeln:
+- Nur gültiges JSON
+- Keine Markdown-Formatierung
+- Keine Erklärungen
+- Max. 30 Objekte"""
                     }
                 ],
-                timeout=90.0
+                timeout=60.0
             )
 
         response = anthropic_call_with_retry(extract_themes_api_call)
         response_text = response.content[0].text.strip()
+
         if not response_text:
-            print("Error: Claude returned empty response")
+            logger.warning("Claude returned empty response for theme extraction")
             return _extract_themes_fallback(recommendations)
 
-        # Extract JSON from response (handle markdown code blocks)
+        # Remove markdown code blocks if present
         if response_text.startswith("```"):
-            # Remove markdown code block wrapper
-            response_text = response_text.split("```")[1]
-            if response_text.startswith("json"):
-                response_text = response_text[4:]
+            parts = response_text.split("```")
+            response_text = parts[1] if len(parts) > 1 else response_text
+            if response_text.startswith("json\n"):
+                response_text = response_text[5:]
             response_text = response_text.strip()
 
-        themes = _parse_json_response(response_text)
+        # Parse JSON with repair
+        themes = _parse_json_response(response_text, max_repair_attempts=1)
         if themes is None:
+            logger.warning("Failed to parse themes from Claude, falling back to simple extraction")
             return _extract_themes_fallback(recommendations)
 
-        return themes[:50] if isinstance(themes, list) else _extract_themes_fallback(recommendations)
+        if not isinstance(themes, list):
+            logger.warning(f"Themes is not a list: {type(themes)}")
+            return _extract_themes_fallback(recommendations)
+
+        return themes[:30] if len(themes) > 30 else themes
     except Exception as e:
-        logger.error(f"Error extracting themes with Claude: {str(e)}", exc_info=True)
-        print(f"Error extracting themes: {e}")
-        traceback.print_exc()
-        # Fall back to simple theme extraction
+        logger.error(f"Error extracting themes with Claude: {str(e)}")
         return _extract_themes_fallback(recommendations)
 
 
@@ -985,63 +998,61 @@ def _generate_theme_questions(theme_name, theme_description):
         def generate_questions_api_call():
             return anthropic_client.messages.create(
                 model="claude-haiku-4-5-20251001",
-                max_tokens=1500,
+                max_tokens=1000,
                 messages=[
                     {
                         "role": "user",
-                        "content": f"""Generiere für das folgende Thema aus Prüfungsempfehlungen:
+                        "content": f"""Generiere für das folgende Thema:
 
 Thema: {theme_name}
 Beschreibung: {theme_description}
 
-Erstelle:
-1. 5 relevante Fragen, die ein Benutzer stellen könnte
-2. 5 praktische Checklist-Items, die überprüft werden sollten
+Erstelle 5 Fragen und 5 Checklist-Items.
 
-Antworte mit einem JSON Objekt im Format:
-{{
-  "questions": [
-    "Frage 1",
-    "Frage 2",
-    ...
-  ],
-  "checklist": [
-    "Checklist Item 1",
-    "Checklist Item 2",
-    ...
-  ]
-}}
+Antworte mit EXAKT diesem Format (nur JSON, keine Code-Blöcke):
+{{"questions": ["Frage 1", "Frage 2"], "checklist": ["Item 1", "Item 2"]}}
 
-Antworte NUR mit dem JSON Objekt, ohne zusätzliche Erklärungen."""
+Regeln:
+- Nur gültiges JSON
+- Keine Markdown
+- Max. 5 Fragen und 5 Items
+- Keine Erklärungen"""
                     }
                 ],
-                timeout=90.0
+                timeout=60.0
             )
 
         response = anthropic_call_with_retry(generate_questions_api_call)
         response_text = response.content[0].text.strip()
 
-        # Extract JSON from response (handle markdown code blocks)
+        if not response_text:
+            logger.warning(f"Empty response for theme questions: {theme_name}")
+            fallback = _generate_theme_questions_fallback(theme_name, theme_description)
+            theme_questions_cache.set(cache_key, fallback)
+            return fallback
+
+        # Remove markdown code blocks if present
         if response_text.startswith("```"):
-            # Remove markdown code block wrapper
-            response_text = response_text.split("```")[1]
+            parts = response_text.split("```")
+            response_text = parts[1] if len(parts) > 1 else response_text
             if response_text.startswith("json"):
                 response_text = response_text[4:]
             response_text = response_text.strip()
 
-        result = _parse_json_response(response_text)
-        final_result = result if isinstance(result, dict) else _generate_theme_questions_fallback(theme_name, theme_description)
-        # Cache the result before returning
-        theme_questions_cache.set(cache_key, final_result)
-        return final_result
+        result = _parse_json_response(response_text, max_repair_attempts=1)
+        if result is None or not isinstance(result, dict):
+            logger.warning(f"Failed to parse questions JSON for {theme_name}, using fallback")
+            fallback = _generate_theme_questions_fallback(theme_name, theme_description)
+            theme_questions_cache.set(cache_key, fallback)
+            return fallback
+
+        theme_questions_cache.set(cache_key, result)
+        return result
     except Exception as e:
-        logger.error(f"Error generating theme questions: {str(e)}", exc_info=True)
-        print(f"Error generating theme questions: {e}")
-        # Fall back to generic questions
-        fallback_result = _generate_theme_questions_fallback(theme_name, theme_description)
-        # Cache the fallback result too
-        theme_questions_cache.set(cache_key, fallback_result)
-        return fallback_result
+        logger.error(f"Error generating theme questions: {str(e)}")
+        fallback = _generate_theme_questions_fallback(theme_name, theme_description)
+        theme_questions_cache.set(cache_key, fallback)
+        return fallback
 
 
 @app.route("/themes", methods=["GET"])
