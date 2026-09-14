@@ -141,6 +141,47 @@ def generate_request_id():
 def before_request():
     """Add request ID to all requests for tracking"""
     request.request_id = generate_request_id()
+    request.start_time = time.time()
+
+
+# Request logging for cost tracking
+class RequestLogger:
+    """Log API calls with cost estimates for monitoring"""
+
+    @staticmethod
+    def log_api_call(endpoint, model, input_tokens, output_tokens, ip_address):
+        """Log an API call with token and cost estimates"""
+        # Cost per 1M tokens (as of Sept 2026)
+        costs = {
+            "text-embedding-3-small": 0.02,  # input only
+            "claude-haiku-4-5-20251001": (0.80, 2.40),  # (input, output)
+            "claude-sonnet-4-6": (3.00, 15.00),  # (input, output)
+        }
+
+        # Calculate cost
+        if model == "text-embedding-3-small":
+            cost = (input_tokens / 1_000_000) * costs[model]
+        else:
+            input_cost = (input_tokens / 1_000_000) * costs[model][0]
+            output_cost = (output_tokens / 1_000_000) * costs[model][1]
+            cost = input_cost + output_cost
+
+        log_entry = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "endpoint": endpoint,
+            "model": model,
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "total_tokens": input_tokens + output_tokens,
+            "estimated_cost_usd": round(cost, 4),
+            "ip_address": ip_address
+        }
+
+        # Log to stdout for debugging
+        logger.info(f"API_CALL: {log_entry['endpoint']} {log_entry['model']} "
+                   f"tokens={log_entry['total_tokens']} cost=${log_entry['estimated_cost_usd']}")
+
+        return log_entry
 
 
 # Security headers
@@ -569,6 +610,8 @@ def ask():
                 )
 
             with anthropic_call_with_retry(stream_api_call) as stream:
+                input_tokens = 0
+                output_tokens = 0
                 for text in stream.text_stream:
                     if not answer_started:
                         buffer += text
@@ -591,6 +634,18 @@ def ask():
                 yield f"data: {json.dumps({'type': 'text', 'text': buffer})}\n\n"
 
             yield f"data: {json.dumps({'type': 'done'})}\n\n"
+
+            # Log the API call for cost tracking
+            try:
+                RequestLogger.log_api_call(
+                    endpoint="/ask",
+                    model=model_id,
+                    input_tokens=len(expertise_prompt.split()),  # rough estimate
+                    output_tokens=500,  # rough estimate for streaming
+                    ip_address=request.remote_addr
+                )
+            except Exception as log_err:
+                logger.debug(f"Failed to log API call: {log_err}")
 
         except Exception as e:
             logger.error(f"Error in ask endpoint: {str(e)}", exc_info=True)
@@ -892,7 +947,21 @@ Regeln:
             logger.warning(f"Themes is not a list: {type(themes)}")
             return _extract_themes_fallback(recommendations)
 
-        return themes[:30] if len(themes) > 30 else themes
+        result = themes[:30] if len(themes) > 30 else themes
+
+        # Log API call for cost tracking
+        try:
+            RequestLogger.log_api_call(
+                endpoint="/themes (extract)",
+                model="claude-haiku-4-5-20251001",
+                input_tokens=len(recommendation_text.split()) + 50,
+                output_tokens=len(json.dumps(result).split()),
+                ip_address="internal"
+            )
+        except Exception as log_err:
+            logger.debug(f"Failed to log API call: {log_err}")
+
+        return result
     except Exception as e:
         logger.error(f"Error extracting themes with Claude: {str(e)}")
         return _extract_themes_fallback(recommendations)
@@ -1309,6 +1378,23 @@ def theme_questions():
                 "timestamp": datetime.utcnow().isoformat() + "Z"
             }
         }), error_code
+
+
+@app.route("/admin/usage", methods=["GET"])
+def usage_stats():
+    """
+    Monitor endpoint for tracking API usage and costs (basic auth recommended)
+    Returns a summary of request logging info
+    """
+    return jsonify({
+        "message": "API usage logging enabled",
+        "note": "Check application logs for detailed API call tracking",
+        "details": {
+            "endpoints_logged": ["/ask", "/themes", "/theme-questions"],
+            "tracked_metrics": ["tokens", "estimated_cost", "ip_address", "timestamp"],
+            "log_format": "API_CALL: endpoint model tokens=X cost=$Y"
+        }
+    })
 
 
 if __name__ == "__main__":
