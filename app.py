@@ -271,7 +271,11 @@ theme_questions_cache = ThemeCache(ttl_seconds=86400)  # 24h TTL for theme quest
 
 # Initialize API clients with lazy initialization for Supabase
 try:
-    openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    # Disable auto-retry on OpenAI client to prevent wasted tokens on 429 errors
+    openai_client = OpenAI(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        max_retries=0  # Don't auto-retry on 429 (no credits/rate limit)
+    )
 except Exception as e:
     print(f"Warning: OpenAI client initialization failed: {e}")
     openai_client = None
@@ -463,12 +467,20 @@ def ask():
             # Step 1: Embedding (cached)
             question_embedding = embedding_cache.get(question)
             if question_embedding is None:
-                embedding_response = openai_client.embeddings.create(
-                    model="text-embedding-3-small",
-                    input=question
-                )
-                question_embedding = embedding_response.data[0].embedding
-                embedding_cache.set(question, question_embedding)
+                try:
+                    embedding_response = openai_client.embeddings.create(
+                        model="text-embedding-3-small",
+                        input=question
+                    )
+                    question_embedding = embedding_response.data[0].embedding
+                    embedding_cache.set(question, question_embedding)
+                except Exception as e:
+                    error_str = str(e).lower()
+                    if "429" in error_str or "credit" in error_str or "quota" in error_str:
+                        logger.error(f"OpenAI embedding failed - no credits: {e}")
+                        yield f"data: {json.dumps({'type': 'error', 'error': 'OpenAI service unavailable. Please try again later.'})}\n\n"
+                        return
+                    raise
 
             # Step 2: Vector search (with result caching)
             embedding_hash = hashlib.md5(str(question_embedding).encode()).hexdigest()
