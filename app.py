@@ -182,7 +182,16 @@ def _origin_allowed(header_value):
     host = _hostname(header_value)
     if not host:
         return False
-    return host in _ALLOWED_HOSTNAMES
+    if host in _ALLOWED_HOSTNAMES:
+        return True
+    # Flask also serves its own frontend directly (templates/index.html at
+    # "/"), same-origin to this API. That traffic won't be in
+    # ALLOWED_ORIGINS (which is meant for the separate IONOS static site),
+    # so always allow the app's own host too.
+    own_host = request.host.split(":")[0].lower()
+    if own_host.startswith("www."):
+        own_host = own_host[4:]
+    return host == own_host
 
 
 # Inject request ID into request context
