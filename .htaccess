@@ -34,32 +34,70 @@ Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment
 # ────────────────────────────────────────────────────────────────────────────
 
 # Deny access to debug/config files
+#
+# "Deny from all" is Apache 2.2 syntax. On Apache 2.4 it is silently
+# ignored unless the legacy mod_access_compat module is loaded, which
+# many modern hosts (incl. shared hosting) don't load by default -
+# the block below then does nothing and the file is served normally.
+# Every rule here sets both the 2.4 ("Require all denied") and 2.2
+# ("Deny from all") directive, guarded so only the one the running
+# Apache understands is active.
 <Files "check_hash.php">
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </Files>
 
 <Files "db_config.php">
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </Files>
 
 # Block all Python files from being served
 <FilesMatch "\.py$">
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # Block environment and config files
-<FilesMatch "\.(env|example|local)$">
-    Deny from all
+<FilesMatch "(^|/)\.env$|\.(env|example|local)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # Block source control and build files
 <FilesMatch "\.(git|gitignore|md|json|lock)$|^(composer\.|package\.|webpack\.|tsconfig\.)">
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # Block common backup/temp files
 <FilesMatch "\.(bak|tmp|swp|swo|~)$">
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # ────────────────────────────────────────────────────────────────────────────
