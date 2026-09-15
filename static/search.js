@@ -21,11 +21,6 @@ function getSearchSource() {
     return selected ? selected.value : 'strh';
 }
 
-function getModel() {
-    const selected = document.querySelector('input[name="model"]:checked');
-    return selected ? selected.value : 'haiku';
-}
-
 function showError(msg) {
     error.textContent = msg;
     error.classList.add('show');
@@ -59,8 +54,7 @@ async function search() {
             body: JSON.stringify({
                 question: q,
                 expertise_level: getExpertiseLevel(),
-                search_source: getSearchSource(),
-                model: getModel()
+                search_source: getSearchSource()
             })
         });
 
