@@ -635,6 +635,19 @@ def ask():
                     )
                     question_embedding = embedding_response.data[0].embedding
                     embedding_cache.set(question, question_embedding)
+
+                    try:
+                        embedding_tokens = getattr(embedding_response, "usage", None)
+                        embedding_tokens = embedding_tokens.total_tokens if embedding_tokens else len(question.split())
+                        RequestLogger.log_api_call(
+                            endpoint="/ask (embedding)",
+                            model="text-embedding-3-small",
+                            input_tokens=embedding_tokens,
+                            output_tokens=0,
+                            ip_address=client_ip
+                        )
+                    except Exception as log_err:
+                        logger.debug(f"Failed to log embedding API call: {log_err}")
                 except Exception as e:
                     error_str = str(e).lower()
                     if "429" in error_str or "credit" in error_str or "quota" in error_str:
