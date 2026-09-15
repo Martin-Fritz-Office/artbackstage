@@ -40,15 +40,13 @@ class ArtbackstageAPI {
    * @param {string} params.question - The question in German
    * @param {string} [params.expertise_level='beginner'] - 'beginner' or 'expert'
    * @param {string} [params.search_source='strh'] - 'strh', 'brh', or 'all'
-   * @param {string} [params.model='haiku'] - 'haiku' or 'sonnet'
    * @returns {Promise<AsyncIterable>} Server-sent events stream
    */
   async ask(params) {
     const payload = {
       question: params.question,
       expertise_level: params.expertise_level || 'beginner',
-      search_source: params.search_source || 'strh',
-      model: params.model || 'haiku'
+      search_source: params.search_source || 'strh'
     };
 
     return this._requestStream('/ask', {

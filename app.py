@@ -620,8 +620,9 @@ def ask():
     if search_source not in ["strh", "brh", "all"]:
         search_source = "strh"
 
-    model_choice = data.get("model", "haiku").lower()
-    model_id = "claude-sonnet-4-6" if model_choice == "sonnet" else "claude-haiku-4-5-20251001"
+    # Haiku only - a prior incident traced a cost spike to public callers
+    # selecting Sonnet (3.75x the cost) directly via this parameter.
+    model_id = "claude-haiku-4-5-20251001"
 
     def generate():
         try:
@@ -1033,7 +1034,7 @@ def _extract_themes(recommendations):
         def extract_themes_api_call():
             return anthropic_client.messages.create(
                 model="claude-haiku-4-5-20251001",
-                max_tokens=1500,
+                max_tokens=2500,
                 messages=[
                     {
                         "role": "user",
@@ -1049,6 +1050,7 @@ Regeln:
 - Nur gültiges JSON
 - Keine Markdown-Formatierung
 - Keine Erklärungen
+- description: max. 40 Zeichen, ein kurzer Satzfragment
 - Max. 30 Objekte"""
                     }
                 ],
