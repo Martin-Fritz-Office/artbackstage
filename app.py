@@ -136,12 +136,56 @@ def generate_request_id():
     return str(uuid.uuid4())
 
 
+def get_client_ip():
+    """
+    Real client IP, trusting Render's edge proxy.
+    Render appends the true connecting IP as the LAST entry in
+    X-Forwarded-For; earlier entries can be spoofed by the client, so
+    request.remote_addr alone (always 127.0.0.1 behind Render) is useless
+    for per-visitor rate limiting.
+    """
+    forwarded_for = request.headers.get("X-Forwarded-For", "")
+    if forwarded_for:
+        parts = [p.strip() for p in forwarded_for.split(",") if p.strip()]
+        if parts:
+            return parts[-1]
+    return request.remote_addr
+
+
+# Protected AI endpoints: require a same-site Origin/Referer so the public
+# API can't be hammered directly (curl/bots) bypassing the frontend.
+PROTECTED_PATHS = {"/ask", "/themes", "/theme-questions"}
+
+
+def _origin_allowed(header_value):
+    if not header_value:
+        return False
+    return any(header_value.rstrip("/").startswith(origin.strip().rstrip("/"))
+               for origin in allowed_origins if origin.strip())
+
+
 # Inject request ID into request context
 @app.before_request
 def before_request():
     """Add request ID to all requests for tracking"""
     request.request_id = generate_request_id()
     request.start_time = time.time()
+
+    if request.path in PROTECTED_PATHS:
+        origin = request.headers.get("Origin")
+        referer = request.headers.get("Referer")
+        if not (_origin_allowed(origin) or _origin_allowed(referer)):
+            logger.warning(
+                f"Blocked request to {request.path} with disallowed origin/referer "
+                f"(origin={origin!r}, referer={referer!r})"
+            )
+            return jsonify({
+                "error": {
+                    "message": "Forbidden",
+                    "code": 403,
+                    "timestamp": datetime.utcnow().isoformat() + "Z"
+                }
+            }), 403
 
 
 # Request logging for cost tracking
@@ -181,7 +225,42 @@ class RequestLogger:
         logger.info(f"API_CALL: {log_entry['endpoint']} {log_entry['model']} "
                    f"tokens={log_entry['total_tokens']} cost=${log_entry['estimated_cost_usd']}")
 
+        daily_budget.add(cost)
+
         return log_entry
+
+
+class DailyBudget:
+    """
+    Hard circuit breaker on estimated daily spend, independent of any
+    single endpoint's rate limit. Caps worst-case damage from a leaked
+    key, a bug, or abuse that gets past the other safeguards.
+    """
+
+    def __init__(self, limit_usd):
+        self.limit_usd = limit_usd
+        self.day = datetime.utcnow().date()
+        self.spent_usd = 0.0
+        self.lock = threading.Lock()
+
+    def _roll_if_new_day(self):
+        today = datetime.utcnow().date()
+        if today != self.day:
+            self.day = today
+            self.spent_usd = 0.0
+
+    def add(self, cost_usd):
+        with self.lock:
+            self._roll_if_new_day()
+            self.spent_usd += cost_usd
+
+    def is_exceeded(self):
+        with self.lock:
+            self._roll_if_new_day()
+            return self.spent_usd >= self.limit_usd
+
+
+daily_budget = DailyBudget(limit_usd=float(os.getenv("DAILY_BUDGET_USD", "5.0")))
 
 
 # Security headers
@@ -436,7 +515,7 @@ def ask():
     request_id = getattr(request, 'request_id', None)
 
     # Rate limiting
-    client_ip = request.remote_addr
+    client_ip = get_client_ip()
     if not ask_limiter.is_allowed(client_ip):
         logger.warning(f"Rate limit exceeded for IP: {client_ip}", extra={"request_id": request_id})
         return jsonify({
@@ -447,6 +526,17 @@ def ask():
                 "timestamp": datetime.utcnow().isoformat() + "Z"
             }
         }), 429
+
+    if daily_budget.is_exceeded():
+        logger.error("Daily AI spend budget exceeded, refusing /ask request", extra={"request_id": request_id})
+        return jsonify({
+            "error": {
+                "message": "Service temporarily unavailable (daily usage limit reached)",
+                "code": 503,
+                "request_id": request_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 503
 
     if not openai_client or not anthropic_client or not supabase:
         logger.error("API clients not initialized", extra={"request_id": request_id})
@@ -642,7 +732,7 @@ def ask():
                     model=model_id,
                     input_tokens=len(expertise_prompt.split()),  # rough estimate
                     output_tokens=500,  # rough estimate for streaming
-                    ip_address=request.remote_addr
+                    ip_address=client_ip
                 )
             except Exception as log_err:
                 logger.debug(f"Failed to log API call: {log_err}")
@@ -1008,6 +1098,18 @@ Genau {top_n} Nummern, sortiert nach Relevanz (relevantestes zuerst)."""
             )
 
         response = anthropic_call_with_retry(rerank_api_call)
+
+        try:
+            RequestLogger.log_api_call(
+                endpoint="/themes (rerank)",
+                model="claude-haiku-4-5-20251001",
+                input_tokens=len(themes_text.split()) + 50,
+                output_tokens=len(response.content[0].text.split()) if response.content else 0,
+                ip_address="internal"
+            )
+        except Exception as log_err:
+            logger.debug(f"Failed to log API call: {log_err}")
+
         response_text = response.content[0].text.strip()
         if response_text.startswith("```"):
             response_text = response_text.split("```")[1]
@@ -1104,6 +1206,18 @@ Regeln:
             )
 
         response = anthropic_call_with_retry(generate_questions_api_call)
+
+        try:
+            RequestLogger.log_api_call(
+                endpoint="/theme-questions",
+                model="claude-haiku-4-5-20251001",
+                input_tokens=len(theme_name.split()) + len(theme_description.split()) + 60,
+                output_tokens=len(response.content[0].text.split()) if response.content else 0,
+                ip_address="internal"
+            )
+        except Exception as log_err:
+            logger.debug(f"Failed to log API call: {log_err}")
+
         response_text = response.content[0].text.strip()
 
         if not response_text:
@@ -1158,7 +1272,7 @@ def themes():
         }), 503
 
     # Rate limiting for expensive endpoint
-    client_ip = request.remote_addr
+    client_ip = get_client_ip()
     if not themes_limiter.is_allowed(client_ip):
         logger.warning(f"Rate limit exceeded for /themes endpoint, IP: {client_ip}", extra={"request_id": request_id})
         return jsonify({
@@ -1169,6 +1283,17 @@ def themes():
                 "timestamp": datetime.utcnow().isoformat() + "Z"
             }
         }), 429
+
+    if daily_budget.is_exceeded():
+        logger.error("Daily AI spend budget exceeded, refusing /themes request", extra={"request_id": request_id})
+        return jsonify({
+            "error": {
+                "message": "Service temporarily unavailable (daily usage limit reached)",
+                "code": 503,
+                "request_id": request_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 503
 
     try:
         source = request.args.get("source", "strh").lower()
@@ -1277,7 +1402,7 @@ def theme_questions():
         }), 503
 
     # Rate limiting for expensive endpoint
-    client_ip = request.remote_addr
+    client_ip = get_client_ip()
     if not theme_questions_limiter.is_allowed(client_ip):
         logger.warning(f"Rate limit exceeded for /theme-questions endpoint, IP: {client_ip}", extra={"request_id": request_id})
         return jsonify({
@@ -1288,6 +1413,17 @@ def theme_questions():
                 "timestamp": datetime.utcnow().isoformat() + "Z"
             }
         }), 429
+
+    if daily_budget.is_exceeded():
+        logger.error("Daily AI spend budget exceeded, refusing /theme-questions request", extra={"request_id": request_id})
+        return jsonify({
+            "error": {
+                "message": "Service temporarily unavailable (daily usage limit reached)",
+                "code": 503,
+                "request_id": request_id,
+                "timestamp": datetime.utcnow().isoformat() + "Z"
+            }
+        }), 503
 
     try:
         data = request.json
