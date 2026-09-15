@@ -97,7 +97,7 @@ import json
 import logging
 import signal
 import threading
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from datetime import datetime, timedelta
 from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
@@ -157,11 +157,32 @@ def get_client_ip():
 PROTECTED_PATHS = {"/ask", "/themes", "/theme-questions"}
 
 
+def _hostname(value):
+    """
+    Extract just the hostname, tolerant of a missing scheme and of a
+    "www." prefix that may or may not be present on either side of the
+    comparison (ALLOWED_ORIGINS vs. the browser's actual Origin/Referer).
+    """
+    value = (value or "").strip()
+    if not value:
+        return ""
+    if "//" not in value:
+        value = "//" + value
+    host = (urlparse(value).hostname or "").lower()
+    if host.startswith("www."):
+        host = host[4:]
+    return host
+
+
+_ALLOWED_HOSTNAMES = {_hostname(o) for o in allowed_origins if o.strip()} - {""}
+logger.info(f"Origin/Referer check allows hostnames: {sorted(_ALLOWED_HOSTNAMES)}")
+
+
 def _origin_allowed(header_value):
-    if not header_value:
+    host = _hostname(header_value)
+    if not host:
         return False
-    return any(header_value.rstrip("/").startswith(origin.strip().rstrip("/"))
-               for origin in allowed_origins if origin.strip())
+    return host in _ALLOWED_HOSTNAMES
 
 
 # Inject request ID into request context
