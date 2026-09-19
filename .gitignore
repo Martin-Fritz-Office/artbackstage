@@ -1,4 +1,4 @@
-.env
+# Lokale DB-Zugangsdatendb_config.phpdb_config.php.env
 .env.local
 __pycache__/
 *.py[cod]
