@@ -33,3 +33,5 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+# Lokale DB-Zugangsdaten
+db_config.php
